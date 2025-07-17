@@ -1,6 +1,3 @@
-/* ================================
-   Root Variables & Base Styles
-================================ */
 :root {
   --color-primary: #0077cc;
   --color-primary-hover: #005fa3;
@@ -19,35 +16,29 @@ html, body {
   background: linear-gradient(to bottom right, var(--color-bg-light), #ffffff);
   color: var(--color-text);
   height: 100%;
+  overflow-x: hidden;
 }
 
-/* ================================
-   Layout Container
-================================ */
+/* Layout */
 .page-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
-  position: relative;
-  z-index: 1;
 }
 
-/* ================================
-   Header Section
-================================ */
+/* Header */
 .site-header {
-  padding: 2rem;
+  padding: 1.5rem 2rem 1rem;
   background: transparent;
 }
 
 .header-flex {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 2rem;
+  justify-content: space-between;
   flex-wrap: wrap;
-  position: relative;
+  gap: 1.5rem;
 }
 
 .logo-container {
@@ -55,31 +46,31 @@ html, body {
 }
 
 .header-logo-img {
-  max-height: 140px;
+  max-height: 200px;
   width: auto;
 }
 
 .title-group {
-  max-width: 500px;
+  flex-grow: 1;
+  min-width: 250px;
 }
 
 .site-title {
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   font-weight: 700;
   margin: 0;
 }
 
 .tagline {
-  font-size: 1rem;
-  color: var(--color-muted);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
   margin-top: 0.5rem;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 /* Partner Link */
-.partner-link {
-  margin-left: auto;
-}
-
 .partner-link a {
   font-weight: 600;
   color: var(--color-primary);
@@ -95,9 +86,7 @@ html, body {
   color: #fff;
 }
 
-/* ================================
-   Main Content
-================================ */
+/* Main Content */
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -119,7 +108,7 @@ html, body {
 }
 
 .section-top {
-  margin-top: -1rem;
+  margin-top: -0.5rem;
 }
 
 .section-title {
@@ -128,9 +117,7 @@ html, body {
   margin-bottom: 0.5rem;
 }
 
-/* ================================
-   Divider & Animations
-================================ */
+/* Divider */
 .divider {
   border: none;
   border-top: 1px solid #ccc;
@@ -146,22 +133,7 @@ html, body {
   }
 }
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================================
-   Call to Action
-================================ */
+/* CTA */
 .early-bird {
   font-size: 0.95rem;
   font-weight: 500;
@@ -190,21 +162,25 @@ html, body {
   100% { transform: scale(1); }
 }
 
-/* ================================
-   Sticky CTA (Mobile Only)
-================================ */
+/* Sticky CTA */
 .cta-sticky {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .header-flex {
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
   .header-logo-img {
-    max-height: 100px;
+    max-height: 140px;
+  }
+
+  .tagline {
+    font-size: 1.2rem;
+    white-space: normal;
   }
 
   .partner-link {
@@ -231,29 +207,10 @@ html, body {
   }
 }
 
-/* ================================
-   Footer
-================================ */
+/* Footer */
 .site-footer {
   text-align: center;
   font-size: 0.9rem;
   background: #eee;
   padding: 0.75rem;
-}
-
-
-/* Tagline Styling */
-.tagline {
-  font-size: 1.6rem;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--color-primary);
-}
-
-/* Logo Styling */
-.header-logo-img {
-  max-height: 180px;
-  width: auto;
 }
