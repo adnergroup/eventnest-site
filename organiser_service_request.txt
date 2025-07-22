@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventNest NZ - Event Organiser Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .primary-bg {
+            background-color: #070580;
+        }
+        .primary-light-bg {
+            background-color: rgba(7, 5, 128, 0.1);
+        }
+        .primary-border {
+            border-color: #070580;
+        }
+        .primary-text {
+            color: #070580;
+        }
+        .primary-gradient {
+            background: linear-gradient(to right, #070580, #1a18a0);
+        }
+        .required-field::after {
+            content: "*";
+            color: #e53e3e;
+            margin-left: 2px;
+        }
+        .date-error {
+            color: #e53e3e;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl overflow-hidden">
+            <!-- Header -->
+            <div class="primary-gradient p-6 md:p-8">
+                <div class="flex items-center">
+                    <div class="text-white">
+                        <h1 class="text-2xl md:text-3xl font-bold">Event Nest NZ - Event Organiser Request</h1>
+                        <p class="text-blue-100">Find the perfect service provider for your special event</p>
+                    </div>
+                </div>
+                <!-- Progress Bar -->
+                <div class="mt-6 bg-white bg-opacity-30 rounded-full h-2">
+                    <div id="progress-bar" class="progress-bar bg-white" style="width: 14.3%;"></div>
+                </div>
+                <!-- Step Indicators -->
+                <div class="flex justify-between mt-2 text-xs text-white">
+                    <span id="step-label">Step 1 of 7: Event Overview</span>
+                    <span id="step-counter">1/7</span>
+                </div>
+            </div>
+
+            <!-- Form Container -->
+            <div class="p-6 md:p-8">
+                <form id="event-form" class="space-y-6">
+                    <!-- Step 1: Event Overview -->
+                    <div id="step-1" class="form-section active">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">1</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Event Overview</h2>
+							
+													<style>
+  .back-button {
+    background-color: #070580;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    float: right; /* Aligns within the container */
+    margin: 10px;
+  }
+
+  .back-button:hover {
+    background-color: #050460;
+  }
+</style>
+
+<div>
+  <button class="back-button" onclick="window.location.href='index2.html'">
+    ⬅️ Go Back to Home
+  </button>
+</div>
+							
+							
+                        </div>
+                        <p class="text-gray-600 mb-6">📍 Establish the foundations for your event</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1 required-field">Location</label>
+                                <select id="location" name="location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="Wellington" selected>Wellington</option>
+                                    <option value="Auckland">Auckland</option>
+                                    <option value="Christchurch">Christchurch</option>
+                                    <option value="Dunedin">Dunedin</option>
+                                    <option value="Hamilton">Hamilton</option>
+                                    <option value="Tauranga">Tauranga</option>
+                                    <option value="Queenstown">Queenstown</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-1">Where will your event take place?</p>
+                            </div>
+                            
+                            <div id="other-location-container" class="hidden">
+                                <label for="other-location" class="block text-sm font-medium text-gray-700 mb-1 required-field">Please specify location</label>
+                                <input type="text" id="other-location" name="other-location" placeholder="Enter your location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            
+                            <div>
+                                <label for="event-date" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Date</label>
+                                <input type="date" id="event-date" name="event-date" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                <p class="text-xs text-gray-500 mt-1">When is your event scheduled?</p>
+                                <p id="date-error" class="date-error">Event date must be today or a future date.</p>
+                            </div>
+                            
+                            <div>
+                                <label for="event-type" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Type</label>
+                                <select id="event-type" name="event-type" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="Birthday" selected>Birthday</option>
+                                    <option value="Wedding">Wedding</option>
+                                    <option value="Corporate">Corporate</option>
+                                    <option value="Anniversary">Anniversary</option>
+                                    <option value="Graduation">Graduation</option>
+                                    <option value="Holiday">Holiday Party</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-1">What type of event are you planning?</p>
+                            </div>
+                            
+                            <div>
+                                <label for="service-category" class="block text-sm font-medium text-gray-700 mb-1 required-field">Service Category</label>
+                                <select id="service-category" name="service-category" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="Catering" selected>Catering & Food Services</option>
+                                    <option value="Photography">Photography & Videography</option>
+                                    <option value="Decorations">Stage & Party Decorations</option>
+                                    <option value="AV">Audio Video/Technical Services</option>
+                                    <option value="Transport">Transport & Logistics Support</option>
+                                    <option value="Cleaning">Cleaning & Waste Management</option>
+                                    <option value="Kids">Kids' Entertainment</option>
+                                    <option value="Cultural">Māori & Pasifika Cultural Services</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-1">What service do you need for your event?</p>
+                            </div>
+                            
+                            <div>
+                                <label for="guests" class="block text-sm font-medium text-gray-700 mb-1 required-field">Number of Guests</label>
+                                <input type="number" id="guests" name="guests" min="1" placeholder="Enter number of guests" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                <p class="text-xs text-gray-500 mt-1">How many people will attend your event?</p>
+                            </div>
+                            
+                            <div>
+                                <label for="event-overview" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Description</label>
+                                <textarea id="event-overview" name="event-overview" rows="3" placeholder="Briefly describe your event" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Provide a brief overview of your event to help service providers understand your needs</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Event Subcategory Selection -->
+                    <div id="step-2" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">2</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Event Subcategory Selection</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">🎯 Choose specific options for your selected service</p>
+                        
+                        <!-- Catering Subcategory Options (shown only when Catering is selected) -->
+                        <div id="catering-options" class="space-y-4">
+                            <div>
+                                <label for="cuisine-type" class="block text-sm font-medium text-gray-700 mb-1 required-field">Select Your Cuisine Type</label>
+                                <select id="cuisine-type" name="cuisine-type" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select cuisine type</option>
+                                    <option value="modern-kiwi">Modern Kiwi Cuisine – Fresh, seasonal, locally sourced</option>
+                                    <option value="maori-hangi">Traditional Māori Hangi – Authentic earth-cooked feast</option>
+                                    <option value="pacific-island">Pacific Island Cuisine – Samoan, Tongan, Fijian flavors</option>
+                                    <option value="nz-bbq">Classic NZ Barbecue – Grilled lamb, seafood, vegetables</option>
+                                    <option value="north-indian">North Indian Cuisine – Rich curries, tandoori specialties</option>
+                                    <option value="south-indian">South Indian Cuisine – Dosas, idlis, flavorful curries</option>
+                                    <option value="vegetarian-vegan">Vegetarian/Vegan Options – Plant-forward selections</option>
+                                    <option value="gluten-free">Gluten-Free & Allergy Friendly – Inclusive menus</option>
+                                    <option value="finger-foods">Gourmet Finger Foods – Upscale canapés, small plates</option>
+                                    <option value="fusion">Fusion Cuisine – NZ combined with Asian, European, or Med influences</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <div class="flex items-start">
+                                    <div class="text-blue-500 mr-3 text-xl">💡</div>
+                                    <p class="text-sm text-blue-800">This selection helps us match you with caterers who specialize in your preferred cuisine style.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photography Subcategory Options (shown when Photography is selected) -->
+                        <div id="photography-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="photography-style" class="block text-sm font-medium text-gray-700 mb-1 required-field">Photography Style</label>
+                                <select id="photography-style" name="photography-style" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select photography style</option>
+                                    <option value="traditional">Traditional & Classic</option>
+                                    <option value="documentary">Documentary & Candid</option>
+                                    <option value="artistic">Artistic & Creative</option>
+                                    <option value="aerial">Aerial & Drone Photography</option>
+                                    <option value="portrait">Portrait Focus</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <div class="flex items-start">
+                                    <div class="text-blue-500 mr-3 text-xl">📸</div>
+                                    <p class="text-sm text-blue-800">Your style preference helps us match you with photographers who specialize in your desired aesthetic.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Decorations Subcategory Options -->
+                        <div id="decorations-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="decoration-style" class="block text-sm font-medium text-gray-700 mb-1 required-field">Decoration Style</label>
+                                <select id="decoration-style" name="decoration-style" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select decoration style</option>
+                                    <option value="elegant">Elegant & Sophisticated</option>
+                                    <option value="rustic">Rustic & Natural</option>
+                                    <option value="modern">Modern & Minimalist</option>
+                                    <option value="themed">Themed Decorations</option>
+                                    <option value="cultural">Cultural & Traditional</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- AV Subcategory Options -->
+                        <div id="av-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="av-requirements" class="block text-sm font-medium text-gray-700 mb-1 required-field">AV Requirements</label>
+                                <select id="av-requirements" name="av-requirements" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select AV requirements</option>
+                                    <option value="sound">Sound System Only</option>
+                                    <option value="projection">Projection Equipment</option>
+                                    <option value="lighting">Lighting Setup</option>
+                                    <option value="full-package">Full AV Package</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Transport Subcategory Options -->
+                        <div id="transport-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="transport-type" class="block text-sm font-medium text-gray-700 mb-1 required-field">Transport Type</label>
+                                <select id="transport-type" name="transport-type" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select transport type</option>
+                                    <option value="guest-shuttle">Guest Shuttle Service</option>
+                                    <option value="equipment">Equipment Transport</option>
+                                    <option value="vip">VIP Transportation</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Cleaning Subcategory Options -->
+                        <div id="cleaning-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="cleaning-service" class="block text-sm font-medium text-gray-700 mb-1 required-field">Cleaning Service</label>
+                                <select id="cleaning-service" name="cleaning-service" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select cleaning service</option>
+                                    <option value="pre-event">Pre-Event Cleaning</option>
+                                    <option value="post-event">Post-Event Cleaning</option>
+                                    <option value="waste">Waste Management</option>
+                                    <option value="full-service">Full Service (Pre, During & Post)</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Kids Entertainment Subcategory Options -->
+                        <div id="kids-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="kids-entertainment" class="block text-sm font-medium text-gray-700 mb-1 required-field">Kids Entertainment</label>
+                                <select id="kids-entertainment" name="kids-entertainment" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select kids entertainment</option>
+                                    <option value="face-painting">Face Painting</option>
+                                    <option value="games">Games & Activities</option>
+                                    <option value="performers">Performers (Clowns, Magicians, etc.)</option>
+                                    <option value="inflatables">Inflatables & Play Equipment</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Cultural Services Subcategory Options -->
+                        <div id="cultural-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="cultural-service" class="block text-sm font-medium text-gray-700 mb-1 required-field">Cultural Service</label>
+                                <select id="cultural-service" name="cultural-service" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select cultural service</option>
+                                    <option value="powhiri">Pōwhiri (Māori Welcome Ceremony)</option>
+                                    <option value="kapa-haka">Kapa Haka Performance</option>
+                                    <option value="pacific-dance">Pacific Island Dance Performance</option>
+                                    <option value="cultural-advisor">Cultural Advisor/MC</option>
+                                    <option value="other">Other – Please specify in additional details</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Other Service Category Options -->
+                        <div id="other-service-options" class="space-y-4 hidden">
+                            <div>
+                                <label for="other-service-details" class="block text-sm font-medium text-gray-700 mb-1 required-field">Service Details</label>
+                                <textarea id="other-service-details" name="other-service-details" rows="3" placeholder="Please describe the specific service you're looking for" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <div class="flex items-start">
+                                    <div class="text-blue-500 mr-3 text-xl">✨</div>
+                                    <p class="text-sm text-blue-800">The more details you provide, the better we can match you with the right service provider.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Budgeting -->
+                    <div id="step-3" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">3</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Budgeting</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">💰 Help us match you with providers in your price range</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="budget" class="block text-sm font-medium text-gray-700 mb-1 required-field">Budget Range</label>
+                                <select id="budget" name="budget" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled selected>Select your budget range</option>
+                                    <option value="under-500">Under $500</option>
+                                    <option value="500-1000">$500–$1,000</option>
+                                    <option value="1000-2000">$1,000–$2,000</option>
+                                    <option value="2000-5000">$2,000–$5,000</option>
+                                    <option value="5000-plus">$5,000+</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-1">What is your approximate budget for this service?</p>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <div class="flex items-start">
+                                    <div class="text-blue-500 mr-3 text-xl">✨</div>
+                                    <p class="text-sm text-blue-800">Providing your budget helps service providers offer packages that match your expectations without any surprises.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Service Delivery -->
+                    <div id="step-4" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">4</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Service Delivery</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">🚚 Choose how you'd like the service to be delivered</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-3 required-field">Delivery Method</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="border rounded-lg p-4 cursor-pointer delivery-option" data-value="delivery">
+                                        <div class="flex items-center">
+                                            <input type="radio" id="delivery" name="delivery-method" value="delivery" class="h-4 w-4 text-blue-600 focus:ring-blue-500" required>
+                                            <label for="delivery" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                                                <div class="flex items-center">
+                                                    <span class="text-lg mr-2">🚚</span>
+                                                    Delivery to Location
+                                                </div>
+                                                <p class="text-xs text-gray-500 mt-1">Service provider will deliver to your specified address</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border rounded-lg p-4 cursor-pointer delivery-option border-blue-500 bg-blue-50" data-value="pickup">
+                                        <div class="flex items-center">
+                                            <input type="radio" id="pickup" name="delivery-method" value="pickup" class="h-4 w-4 text-blue-600 focus:ring-blue-500" checked required>
+                                            <label for="pickup" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                                                <div class="flex items-center">
+                                                    <span class="text-lg mr-2">🏬</span>
+                                                    Pickup
+                                                </div>
+                                                <p class="text-xs text-gray-500 mt-1">You'll pick up from the service provider's location</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="delivery-address-container" class="hidden space-y-4 mt-4 p-4 bg-gray-50 rounded-lg">
+                                <h3 class="font-medium text-gray-700">Delivery Address</h3>
+                                
+                                <div>
+                                    <label for="street-address" class="block text-sm font-medium text-gray-700 mb-1 required-field">Street Address</label>
+                                    <input type="text" id="street-address" name="street-address" placeholder="123 Queen Street" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="suburb" class="block text-sm font-medium text-gray-700 mb-1 required-field">Suburb</label>
+                                        <input type="text" id="suburb" name="suburb" placeholder="Wellington Central" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="city" class="block text-sm font-medium text-gray-700 mb-1 required-field">City</label>
+                                        <input type="text" id="city" name="city" placeholder="Wellington" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label for="postcode" class="block text-sm font-medium text-gray-700 mb-1 required-field">Postcode</label>
+                                    <input type="text" id="postcode" name="postcode" placeholder="6011" pattern="[0-9]{4}" maxlength="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <p class="text-xs text-gray-500 mt-1">New Zealand postcodes are 4 digits</p>
+                                </div>
+                                
+                                <div>
+                                    <label for="delivery-notes" class="block text-sm font-medium text-gray-700 mb-1">Delivery Notes (Optional)</label>
+                                    <textarea id="delivery-notes" name="delivery-notes" rows="2" placeholder="Any special instructions for delivery (e.g., access codes, landmarks)" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Additional Event Details -->
+                    <div id="step-5" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">5</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Additional Event Details</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">📝 Share any special requirements or personal touches</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="event-details" class="block text-sm font-medium text-gray-700 mb-1">Additional Details (Optional)</label>
+                                <textarea id="event-details" name="event-details" rows="5" placeholder="Please share any specific requirements, themes, dietary restrictions, or other details that will help service providers prepare the perfect proposal for your event." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                <p class="text-xs text-gray-500 mt-1">Any other information that might help service providers understand your needs better</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6: Organiser Info -->
+                    <div id="step-6" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">6</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Organiser Information</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">📩 Your contact details for follow-up</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1 required-field">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1 required-field">Email Address</label>
+                                <input type="email" id="email" name="email" placeholder="your.email@example.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="mobile" class="block text-sm font-medium text-gray-700 mb-1">Mobile Number (Optional)</label>
+                                <input type="tel" id="mobile" name="mobile" placeholder="e.g., 021 123 4567" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 7: Review & Submit -->
+                    <div id="step-7" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">7</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Review & Submit</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">✅ Review your information and submit</p>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                <h3 class="font-medium text-gray-700 mb-3">Event Summary</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="text-gray-500">Location</p>
+                                        <p id="summary-location" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Event Date</p>
+                                        <p id="summary-date" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Event Type</p>
+                                        <p id="summary-type" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Service Category</p>
+                                        <p id="summary-service" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Number of Guests</p>
+                                        <p id="summary-guests" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Budget Range</p>
+                                        <p id="summary-budget" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Delivery Method</p>
+                                        <p id="summary-delivery" class="font-medium">Not specified</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Subcategory Summary (shown based on selected service) -->
+                                <div id="summary-subcategory-container" class="mt-4 pt-4 border-t border-gray-200 hidden">
+                                    <div>
+                                        <p class="text-gray-500" id="summary-subcategory-label">Subcategory</p>
+                                        <p id="summary-subcategory" class="font-medium">Not specified</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Delivery Address Summary (shown only if delivery is selected) -->
+                                <div id="summary-address-container" class="mt-4 pt-4 border-t border-gray-200 hidden">
+                                    <h4 class="font-medium text-gray-700 mb-2">Delivery Address</h4>
+                                    <p id="summary-address" class="text-sm">Not specified</p>
+                                </div>
+                                
+                                <!-- Event Overview Summary -->
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <h4 class="font-medium text-gray-700 mb-2">Event Description</h4>
+                                    <p id="summary-overview" class="text-sm">Not specified</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-2">
+                                <input type="checkbox" id="terms" name="terms" class="mt-1" required>
+                                <label for="terms" class="text-sm text-gray-600">I agree to the <a href="#" class="primary-text hover:underline">Terms of Service</a> and <a href="#" class="primary-text hover:underline">Privacy Policy</a>.</label>
+                            </div>
+                            
+                            <button type="submit" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+                                Get Matched with Service Providers
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between pt-4 border-t border-gray-200">
+                        <button type="button" id="prev-btn" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-300 hidden">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                </svg>
+                                Back
+                            </div>
+                        </button>
+                        <button type="button" id="next-btn" class="px-6 py-2 primary-bg text-white rounded-lg hover:bg-blue-800 transition duration-300">
+                            <div class="flex items-center">
+                                Next
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Success Modal (Hidden by default) -->
+        <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                        <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Submission Successful!</h3>
+                    <p class="text-gray-600 mb-6">Your event details have been submitted. Our service providers will be in touch with you shortly.</p>
+                    <button id="close-modal" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition duration-300">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('event-form');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const stepLabel = document.getElementById('step-label');
+            const stepCounter = document.getElementById('step-counter');
+            const successModal = document.getElementById('success-modal');
+            const closeModal = document.getElementById('close-modal');
+            const locationSelect = document.getElementById('location');
+            const otherLocationContainer = document.getElementById('other-location-container');
+            const serviceCategory = document.getElementById('service-category');
+            const deliveryOptions = document.querySelectorAll('.delivery-option');
+            const deliveryAddressContainer = document.getElementById('delivery-address-container');
+            const eventDateInput = document.getElementById('event-date');
+            const dateError = document.getElementById('date-error');
+            
+            // Subcategory option containers
+            const cateringOptions = document.getElementById('catering-options');
+            const photographyOptions = document.getElementById('photography-options');
+            const decorationsOptions = document.getElementById('decorations-options');
+            const avOptions = document.getElementById('av-options');
+            const transportOptions = document.getElementById('transport-options');
+            const cleaningOptions = document.getElementById('cleaning-options');
+            const kidsOptions = document.getElementById('kids-options');
+            const culturalOptions = document.getElementById('cultural-options');
+            const otherServiceOptions = document.getElementById('other-service-options');
+            
+            let currentStep = 1;
+            const totalSteps = 7;
+            
+            // Set minimum date to today
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayFormatted = `${yyyy}-${mm}-${dd}`;
+            eventDateInput.setAttribute('min', todayFormatted);
+            
+            // Initialize the selected service in localStorage
+            localStorage.setItem('selectedService', serviceCategory.value);
+            
+            // Handle "Other" location selection
+            locationSelect.addEventListener('change', function() {
+                if (this.value === 'Other') {
+                    otherLocationContainer.classList.remove('hidden');
+                } else {
+                    otherLocationContainer.classList.add('hidden');
+                }
+            });
+            
+            // Handle service category selection to show appropriate subcategory options
+            serviceCategory.addEventListener('change', function() {
+                // Store the selected service for later use
+                localStorage.setItem('selectedService', this.value);
+            });
+            
+            // Validate event date
+            eventDateInput.addEventListener('change', function() {
+                validateEventDate();
+            });
+            
+            function validateEventDate() {
+                const selectedDate = new Date(eventDateInput.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Reset time part for accurate date comparison
+                
+                if (selectedDate < today) {
+                    eventDateInput.classList.add('border-red-500');
+                    dateError.style.display = 'block';
+                    return false;
+                } else {
+                    eventDateInput.classList.remove('border-red-500');
+                    dateError.style.display = 'none';
+                    return true;
+                }
+            }
+            
+            // Handle delivery method selection
+            deliveryOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    
+                    // Add selected styling
+                    deliveryOptions.forEach(opt => {
+                        opt.classList.remove('border-blue-500', 'bg-blue-50');
+                    });
+                    this.classList.add('border-blue-500', 'bg-blue-50');
+                    
+                    // Show/hide address form based on selection
+                    if (radio.value === 'delivery') {
+                        deliveryAddressContainer.classList.remove('hidden');
+                    } else {
+                        deliveryAddressContainer.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Update subcategory options based on selected service
+            function updateSubcategoryOptions() {
+                const selectedService = localStorage.getItem('selectedService');
+                
+                // Hide all subcategory options first
+                cateringOptions.classList.add('hidden');
+                photographyOptions.classList.add('hidden');
+                decorationsOptions.classList.add('hidden');
+                avOptions.classList.add('hidden');
+                transportOptions.classList.add('hidden');
+                cleaningOptions.classList.add('hidden');
+                kidsOptions.classList.add('hidden');
+                culturalOptions.classList.add('hidden');
+                otherServiceOptions.classList.add('hidden');
+                
+                // Remove required attribute from all subcategory fields
+                document.getElementById('cuisine-type').removeAttribute('required');
+                document.getElementById('photography-style').removeAttribute('required');
+                document.getElementById('decoration-style').removeAttribute('required');
+                document.getElementById('av-requirements').removeAttribute('required');
+                document.getElementById('transport-type').removeAttribute('required');
+                document.getElementById('cleaning-service').removeAttribute('required');
+                document.getElementById('kids-entertainment').removeAttribute('required');
+                document.getElementById('cultural-service').removeAttribute('required');
+                document.getElementById('other-service-details').removeAttribute('required');
+                
+                // Show appropriate subcategory options based on selection
+                if (selectedService === 'Catering') {
+                    cateringOptions.classList.remove('hidden');
+                    document.getElementById('cuisine-type').setAttribute('required', 'required');
+                } else if (selectedService === 'Photography') {
+                    photographyOptions.classList.remove('hidden');
+                    document.getElementById('photography-style').setAttribute('required', 'required');
+                } else if (selectedService === 'Decorations') {
+                    decorationsOptions.classList.remove('hidden');
+                    document.getElementById('decoration-style').setAttribute('required', 'required');
+                } else if (selectedService === 'AV') {
+                    avOptions.classList.remove('hidden');
+                    document.getElementById('av-requirements').setAttribute('required', 'required');
+                } else if (selectedService === 'Transport') {
+                    transportOptions.classList.remove('hidden');
+                    document.getElementById('transport-type').setAttribute('required', 'required');
+                } else if (selectedService === 'Cleaning') {
+                    cleaningOptions.classList.remove('hidden');
+                    document.getElementById('cleaning-service').setAttribute('required', 'required');
+                } else if (selectedService === 'Kids') {
+                    kidsOptions.classList.remove('hidden');
+                    document.getElementById('kids-entertainment').setAttribute('required', 'required');
+                } else if (selectedService === 'Cultural') {
+                    culturalOptions.classList.remove('hidden');
+                    document.getElementById('cultural-service').setAttribute('required', 'required');
+                } else if (selectedService === 'Other') {
+                    otherServiceOptions.classList.remove('hidden');
+                    document.getElementById('other-service-details').setAttribute('required', 'required');
+                }
+            }
+            
+            // Update the form based on the current step
+            function updateForm() {
+                // Hide all sections
+                document.querySelectorAll('.form-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show current section
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                
+                // Update subcategory options if on step 2
+                if (currentStep === 2) {
+                    updateSubcategoryOptions();
+                }
+                
+                // Update progress bar
+                const progress = (currentStep / totalSteps) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Update step indicators
+                stepCounter.textContent = `${currentStep}/${totalSteps}`;
+                
+                // Update step label
+                const stepLabels = [
+                    "Event Overview",
+                    "Event Subcategory Selection",
+                    "Budgeting",
+                    "Service Delivery",
+                    "Additional Event Details",
+                    "Organiser Information",
+                    "Review & Submit"
+                ];
+                stepLabel.textContent = `Step ${currentStep} of ${totalSteps}: ${stepLabels[currentStep-1]}`;
+                
+                // Show/hide navigation buttons
+                if (currentStep === 1) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                if (currentStep === totalSteps) {
+                    nextBtn.classList.add('hidden');
+                } else {
+                    nextBtn.classList.remove('hidden');
+                }
+                
+                // Update summary on the last step
+                if (currentStep === totalSteps) {
+                    updateSummary();
+                }
+            }
+            
+            // Get subcategory value and label based on selected service
+            function getSubcategoryInfo() {
+                const selectedService = localStorage.getItem('selectedService');
+                let subcategoryValue = '';
+                let subcategoryLabel = '';
+                
+                if (selectedService === 'Catering') {
+                    const select = document.getElementById('cuisine-type');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text.split('–')[0].trim();
+                        subcategoryLabel = 'Cuisine Type';
+                    }
+                } else if (selectedService === 'Photography') {
+                    const select = document.getElementById('photography-style');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text.split('–')[0].trim();
+                        subcategoryLabel = 'Photography Style';
+                    }
+                } else if (selectedService === 'Decorations') {
+                    const select = document.getElementById('decoration-style');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text;
+                        subcategoryLabel = 'Decoration Style';
+                    }
+                } else if (selectedService === 'AV') {
+                    const select = document.getElementById('av-requirements');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text;
+                        subcategoryLabel = 'AV Requirements';
+                    }
+                } else if (selectedService === 'Transport') {
+                    const select = document.getElementById('transport-type');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text;
+                        subcategoryLabel = 'Transport Type';
+                    }
+                } else if (selectedService === 'Cleaning') {
+                    const select = document.getElementById('cleaning-service');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text;
+                        subcategoryLabel = 'Cleaning Service';
+                    }
+                } else if (selectedService === 'Kids') {
+                    const select = document.getElementById('kids-entertainment');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text;
+                        subcategoryLabel = 'Kids Entertainment';
+                    }
+                } else if (selectedService === 'Cultural') {
+                    const select = document.getElementById('cultural-service');
+                    if (select.value) {
+                        subcategoryValue = select.options[select.selectedIndex].text;
+                        subcategoryLabel = 'Cultural Service';
+                    }
+                } else if (selectedService === 'Other') {
+                    const textarea = document.getElementById('other-service-details');
+                    if (textarea.value) {
+                        subcategoryValue = textarea.value.substring(0, 50) + (textarea.value.length > 50 ? '...' : '');
+                        subcategoryLabel = 'Service Details';
+                    }
+                }
+                
+                return { value: subcategoryValue, label: subcategoryLabel };
+            }
+            
+            // Update the summary on the last step
+            function updateSummary() {
+                // Handle location display (including "Other" option)
+                if (locationSelect.value === 'Other' && document.getElementById('other-location').value) {
+                    document.getElementById('summary-location').textContent = document.getElementById('other-location').value;
+                } else {
+                    document.getElementById('summary-location').textContent = locationSelect.value || 'Not specified';
+                }
+                
+                const eventDate = document.getElementById('event-date').value;
+                document.getElementById('summary-date').textContent = eventDate ? new Date(eventDate).toLocaleDateString() : 'Not specified';
+                
+                document.getElementById('summary-type').textContent = document.getElementById('event-type').value || 'Not specified';
+                
+                // Display service category
+                const serviceCategorySelect = document.getElementById('service-category');
+                document.getElementById('summary-service').textContent = serviceCategorySelect.value ? 
+                    serviceCategorySelect.options[serviceCategorySelect.selectedIndex].text : 'Not specified';
+                
+                const guests = document.getElementById('guests').value;
+                document.getElementById('summary-guests').textContent = guests ? guests : 'Not specified';
+                
+                const budgetSelect = document.getElementById('budget');
+                document.getElementById('summary-budget').textContent = budgetSelect.value ? 
+                    budgetSelect.options[budgetSelect.selectedIndex].text : 'Not specified';
+                
+                // Display event overview
+                const eventOverview = document.getElementById('event-overview').value;
+                document.getElementById('summary-overview').textContent = eventOverview || 'Not specified';
+                
+                // Handle subcategory display
+                const subcategoryInfo = getSubcategoryInfo();
+                if (subcategoryInfo.value) {
+                    document.getElementById('summary-subcategory-label').textContent = subcategoryInfo.label;
+                    document.getElementById('summary-subcategory').textContent = subcategoryInfo.value;
+                    document.getElementById('summary-subcategory-container').classList.remove('hidden');
+                } else {
+                    document.getElementById('summary-subcategory-container').classList.add('hidden');
+                }
+                
+                // Handle delivery method and address
+                const deliveryMethod = document.querySelector('input[name="delivery-method"]:checked');
+                if (deliveryMethod) {
+                    document.getElementById('summary-delivery').textContent = deliveryMethod.value === 'delivery' ? 'Delivery to Location' : 'Pickup';
+                    
+                    // Show address summary if delivery is selected
+                    if (deliveryMethod.value === 'delivery') {
+                        const street = document.getElementById('street-address').value;
+                        const suburb = document.getElementById('suburb').value;
+                        const city = document.getElementById('city').value;
+                        const postcode = document.getElementById('postcode').value;
+                        
+                        if (street || suburb || city || postcode) {
+                            const addressParts = [];
+                            if (street) addressParts.push(street);
+                            if (suburb) addressParts.push(suburb);
+                            if (city) addressParts.push(city);
+                            if (postcode) addressParts.push(postcode);
+                            
+                            document.getElementById('summary-address').textContent = addressParts.join(', ');
+                            document.getElementById('summary-address-container').classList.remove('hidden');
+                        } else {
+                            document.getElementById('summary-address-container').classList.add('hidden');
+                        }
+                    } else {
+                        document.getElementById('summary-address-container').classList.add('hidden');
+                    }
+                } else {
+                    document.getElementById('summary-delivery').textContent = 'Not specified';
+                    document.getElementById('summary-address-container').classList.add('hidden');
+                }
+            }
+            
+            // Next button click handler
+            nextBtn.addEventListener('click', function() {
+                // Simple validation for required fields in the current step
+                const currentSection = document.getElementById(`step-${currentStep}`);
+                const requiredFields = currentSection.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('border-red-500');
+                        
+                        // If the field is a select element, also highlight its parent container
+                        if (field.tagName === 'SELECT') {
+                            field.parentElement.classList.add('shake');
+                            setTimeout(() => {
+                                field.parentElement.classList.remove('shake');
+                            }, 500);
+                        }
+                    } else {
+                        field.classList.remove('border-red-500');
+                    }
+                });
+                
+                // Special validation for "Other" location
+                if (currentStep === 1 && locationSelect.value === 'Other' && document.getElementById('other-location').value.trim() === '') {
+                    isValid = false;
+                    document.getElementById('other-location').classList.add('border-red-500');
+                }
+                
+                // Special validation for event date
+                if (currentStep === 1 && eventDateInput.value) {
+                    if (!validateEventDate()) {
+                        isValid = false;
+                    }
+                }
+                
+                // Special validation for delivery address if delivery is selected
+                if (currentStep === 4) {
+                    const deliveryMethod = document.querySelector('input[name="delivery-method"]:checked');
+                    if (!deliveryMethod) {
+                        isValid = false;
+                        deliveryOptions.forEach(option => {
+                            option.classList.add('border-red-500');
+                        });
+                    } else if (deliveryMethod.value === 'delivery') {
+                        const addressFields = [
+                            document.getElementById('street-address'),
+                            document.getElementById('suburb'),
+                            document.getElementById('city'),
+                            document.getElementById('postcode')
+                        ];
+                        
+                        addressFields.forEach(field => {
+                            if (!field.value.trim()) {
+                                isValid = false;
+                                field.classList.add('border-red-500');
+                            }
+                        });
+                        
+                        // Validate NZ postcode format (4 digits)
+                        const postcode = document.getElementById('postcode');
+                        if (postcode.value && !/^\d{4}$/.test(postcode.value)) {
+                            isValid = false;
+                            postcode.classList.add('border-red-500');
+                        }
+                    }
+                }
+                
+                if (!isValid) {
+                    // Scroll to the first invalid field
+                    const firstInvalidField = currentSection.querySelector('.border-red-500');
+                    if (firstInvalidField) {
+                        firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    return;
+                }
+                
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateForm();
+                    // Scroll to top of form section
+                    document.querySelector('.form-section.active').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            // Previous button click handler
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateForm();
+                    // Scroll to top of form section
+                    document.querySelector('.form-section.active').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Check if terms checkbox is checked
+                if (!document.getElementById('terms').checked) {
+                    alert('Please agree to the Terms of Service and Privacy Policy.');
+                    return;
+                }
+                
+                // Show success modal
+                successModal.classList.remove('hidden');
+            });
+            
+            // Close modal button
+            closeModal.addEventListener('click', function() {
+                successModal.classList.add('hidden');
+                
+                // Reset form and go back to step 1
+                form.reset();
+                currentStep = 1;
+                updateForm();
+            });
+            
+            // Initialize the form
+            updateForm();
+            
+            // Add input event listeners to remove error styling when user types
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                element.addEventListener('input', function() {
+                    this.classList.remove('border-red-500');
+                    if (this.id === 'event-date') {
+                        validateEventDate();
+                    }
+                });
+            });
+            
+            // Remove error styling from delivery options when clicked
+            deliveryOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    deliveryOptions.forEach(opt => {
+                        opt.classList.remove('border-red-500');
+                    });
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96293b5b3538d9a8',t:'MTc1MzA4NTUzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
