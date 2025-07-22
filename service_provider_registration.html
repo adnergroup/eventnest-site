@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventNest NZ - Service Provider Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .primary-bg {
+            background-color: #070580;
+        }
+        .primary-light-bg {
+            background-color: rgba(7, 5, 128, 0.1);
+        }
+        .primary-border {
+            border-color: #070580;
+        }
+        .primary-text {
+            color: #070580;
+        }
+        .primary-gradient {
+            background: linear-gradient(to right, #070580, #1a18a0);
+        }
+        .required-field::after {
+            content: "*";
+            color: #e53e3e;
+            margin-left: 2px;
+        }
+        .checkbox-card {
+            transition: all 0.3s ease;
+        }
+        .checkbox-card.selected {
+            border-color: #070580;
+            background-color: rgba(7, 5, 128, 0.05);
+        }
+        .checkbox-card input:checked + label .check-icon {
+            display: flex;
+        }
+        .check-icon {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background-color: #070580;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl overflow-hidden">
+            <!-- Header -->
+            <div class="primary-gradient p-6 md:p-8">
+                <div class="flex items-center">
+                    <div class="text-white">
+                        <h1 class="text-2xl md:text-3xl font-bold">Event Nest NZ - Service Provider Registration</h1>
+                        <p class="text-blue-100">Join our network and grow your business with event opportunities</p>
+                    </div>
+                </div>
+                <!-- Progress Bar -->
+                <div class="mt-6 bg-white bg-opacity-30 rounded-full h-2">
+                    <div id="progress-bar" class="progress-bar bg-white" style="width: 20%;"></div>
+                </div>
+                <!-- Step Indicators -->
+                <div class="flex justify-between mt-2 text-xs text-white">
+                    <span id="step-label">Step 1 of 5: Business Information</span>
+                    <span id="step-counter">1/5</span>
+                </div>
+            </div>
+
+            <!-- Form Container -->
+            <div class="p-6 md:p-8">
+                <form id="provider-form" class="space-y-6">
+                    <!-- Step 1: Business Information -->
+                    <div id="step-1" class="form-section active">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">1</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Business Information</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">📋 Tell us about your business</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="business-name" class="block text-sm font-medium text-gray-700 mb-1 required-field">Business Name</label>
+                                <input type="text" id="business-name" name="business-name" placeholder="Your business name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="business-type" class="block text-sm font-medium text-gray-700 mb-1 required-field">Business Type</label>
+                                <select id="business-type" name="business-type" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="sole-trader" selected>Sole Trader</option>
+                                    <option value="partnership">Partnership</option>
+                                    <option value="limited-company">Limited Company</option>
+                                    <option value="trust">Trust</option>
+                                    <option value="non-profit">Non-Profit Organization</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="nzbn" class="block text-sm font-medium text-gray-700 mb-1">NZBN (New Zealand Business Number)</label>
+                                <input type="text" id="nzbn" name="nzbn" placeholder="e.g., 9429041901919" pattern="[0-9]{13}" maxlength="13" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <p class="text-xs text-gray-500 mt-1">If applicable (13 digits)</p>
+                            </div>
+                            
+                            <div>
+                                <label for="gst-number" class="block text-sm font-medium text-gray-700 mb-1">GST Number</label>
+                                <input type="text" id="gst-number" name="gst-number" placeholder="e.g., 123-456-789" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <p class="text-xs text-gray-500 mt-1">If registered for GST</p>
+                            </div>
+                            
+                            <div>
+                                <label for="years-operating" class="block text-sm font-medium text-gray-700 mb-1 required-field">Years in Operation</label>
+                                <select id="years-operating" name="years-operating" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="" disabled>Select years in operation</option>
+                                    <option value="less-than-1">Less than 1 year</option>
+                                    <option value="1-3">1-3 years</option>
+                                    <option value="4-7">4-7 years</option>
+                                    <option value="8-15">8-15 years</option>
+                                    <option value="more-than-15">More than 15 years</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="business-description" class="block text-sm font-medium text-gray-700 mb-1 required-field">Business Description</label>
+                                <textarea id="business-description" name="business-description" rows="4" placeholder="Tell us about your business, services, and what makes you unique" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                                <p class="text-xs text-gray-500 mt-1">This will be visible to potential clients</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Service Categories -->
+                    <div id="step-2" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">2</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Service Categories</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">🎯 Select the services you provide (choose all that apply)</p>
+                        
+                        <div class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="catering" name="service-categories" value="catering" class="hidden">
+                                    <label for="catering" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">🍽️</span>
+                                                <span class="font-medium">Catering & Food Services</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Food preparation, service, specialty cuisines</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="photography" name="service-categories" value="photography" class="hidden">
+                                    <label for="photography" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">📸</span>
+                                                <span class="font-medium">Photography & Videography</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Event photography, video production</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="decorations" name="service-categories" value="decorations" class="hidden">
+                                    <label for="decorations" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">🎭</span>
+                                                <span class="font-medium">Stage & Party Decorations</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Event styling, themed decorations</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="av" name="service-categories" value="av" class="hidden">
+                                    <label for="av" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">🎵</span>
+                                                <span class="font-medium">Audio Video/Technical Services</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Sound systems, lighting, projections</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="transport" name="service-categories" value="transport" class="hidden">
+                                    <label for="transport" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">🚐</span>
+                                                <span class="font-medium">Transport & Logistics Support</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Guest shuttles, equipment transport</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="cleaning" name="service-categories" value="cleaning" class="hidden">
+                                    <label for="cleaning" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">🧹</span>
+                                                <span class="font-medium">Cleaning & Waste Management</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Pre/post event cleaning, waste disposal</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="kids" name="service-categories" value="kids" class="hidden">
+                                    <label for="kids" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">🧒</span>
+                                                <span class="font-medium">Kids' Entertainment</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Face painting, games, performers</p>
+                                        </div>
+                                    </label>
+                                </div>
+                                
+                                <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                    <input type="checkbox" id="cultural" name="service-categories" value="cultural" class="hidden">
+                                    <label for="cultural" class="flex items-start cursor-pointer">
+                                        <div class="check-icon">✓</div>
+                                        <div>
+                                            <div class="flex items-center">
+                                                <span class="text-lg mr-2">🏞️</span>
+                                                <span class="font-medium">Māori & Pasifika Cultural Services</span>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mt-1">Pōwhiri, kapa haka, cultural performances</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="checkbox-card border rounded-lg p-4 relative cursor-pointer">
+                                <input type="checkbox" id="other-service" name="service-categories" value="other" class="hidden">
+                                <label for="other-service" class="flex items-start cursor-pointer">
+                                    <div class="check-icon">✓</div>
+                                    <div class="w-full">
+                                        <div class="flex items-center">
+                                            <span class="text-lg mr-2">✨</span>
+                                            <span class="font-medium">Other Service</span>
+                                        </div>
+                                        <div id="other-service-input-container" class="mt-2 hidden">
+                                            <input type="text" id="other-service-input" name="other-service-input" placeholder="Please specify your service" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div id="service-error" class="text-red-500 text-sm hidden">Please select at least one service category.</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Service Details -->
+                    <div id="step-3" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">3</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Service Details</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">🔍 Tell us more about your specific services</p>
+                        
+                        <!-- Catering Service Details (shown only when Catering is selected) -->
+                        <div id="catering-details" class="service-details hidden space-y-4">
+                            <h3 class="font-medium text-gray-800 border-b pb-2">Catering & Food Services Details</h3>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Cuisine Types (Select all that apply)</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-modern-kiwi" name="cuisine-types" value="modern-kiwi" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-modern-kiwi" class="text-sm text-gray-700">Modern Kiwi Cuisine</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-maori" name="cuisine-types" value="maori" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-maori" class="text-sm text-gray-700">Traditional Māori Hangi</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-pacific" name="cuisine-types" value="pacific" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-pacific" class="text-sm text-gray-700">Pacific Island Cuisine</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-bbq" name="cuisine-types" value="bbq" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-bbq" class="text-sm text-gray-700">Classic NZ Barbecue</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-indian" name="cuisine-types" value="indian" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-indian" class="text-sm text-gray-700">Indian Cuisine</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-vegetarian" name="cuisine-types" value="vegetarian" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-vegetarian" class="text-sm text-gray-700">Vegetarian/Vegan Options</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-gluten-free" name="cuisine-types" value="gluten-free" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-gluten-free" class="text-sm text-gray-700">Gluten-Free & Allergy Friendly</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-finger-foods" name="cuisine-types" value="finger-foods" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-finger-foods" class="text-sm text-gray-700">Gourmet Finger Foods</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-fusion" name="cuisine-types" value="fusion" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-fusion" class="text-sm text-gray-700">Fusion Cuisine</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="cuisine-other" name="cuisine-types" value="other" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="cuisine-other" class="text-sm text-gray-700">Other</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="catering-capacity" class="block text-sm font-medium text-gray-700 mb-1 required-field">Maximum Capacity</label>
+                                <select id="catering-capacity" name="catering-capacity" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="" disabled selected>Select maximum number of guests you can cater for</option>
+                                    <option value="up-to-50">Up to 50 guests</option>
+                                    <option value="51-100">51-100 guests</option>
+                                    <option value="101-200">101-200 guests</option>
+                                    <option value="201-500">201-500 guests</option>
+                                    <option value="500-plus">500+ guests</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="catering-services" class="block text-sm font-medium text-gray-700 mb-2 required-field">Services Offered (Select all that apply)</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service-buffet" name="catering-services" value="buffet" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="service-buffet" class="text-sm text-gray-700">Buffet Service</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service-plated" name="catering-services" value="plated" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="service-plated" class="text-sm text-gray-700">Plated Service</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service-canapes" name="catering-services" value="canapes" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="service-canapes" class="text-sm text-gray-700">Canapés & Finger Food</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service-food-stalls" name="catering-services" value="food-stalls" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="service-food-stalls" class="text-sm text-gray-700">Food Stalls/Stations</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service-beverage" name="catering-services" value="beverage" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="service-beverage" class="text-sm text-gray-700">Beverage Service</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="service-staff" name="catering-services" value="staff" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="service-staff" class="text-sm text-gray-700">Waiting Staff</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photography Service Details -->
+                        <div id="photography-details" class="service-details hidden space-y-4">
+                            <h3 class="font-medium text-gray-800 border-b pb-2">Photography & Videography Details</h3>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Services Offered (Select all that apply)</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="photo-event" name="photo-services" value="event" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="photo-event" class="text-sm text-gray-700">Event Photography</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="photo-portrait" name="photo-services" value="portrait" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="photo-portrait" class="text-sm text-gray-700">Portrait Photography</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="photo-product" name="photo-services" value="product" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="photo-product" class="text-sm text-gray-700">Product Photography</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="photo-aerial" name="photo-services" value="aerial" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="photo-aerial" class="text-sm text-gray-700">Aerial/Drone Photography</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="video-event" name="photo-services" value="video-event" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="video-event" class="text-sm text-gray-700">Event Videography</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="video-promotional" name="photo-services" value="video-promotional" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="video-promotional" class="text-sm text-gray-700">Promotional Videos</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="video-editing" name="photo-services" value="video-editing" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="video-editing" class="text-sm text-gray-700">Video Editing</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Photography Styles (Select all that apply)</label>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="style-traditional" name="photo-styles" value="traditional" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="style-traditional" class="text-sm text-gray-700">Traditional & Classic</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="style-documentary" name="photo-styles" value="documentary" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="style-documentary" class="text-sm text-gray-700">Documentary & Candid</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="style-artistic" name="photo-styles" value="artistic" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="style-artistic" class="text-sm text-gray-700">Artistic & Creative</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input type="checkbox" id="style-commercial" name="photo-styles" value="commercial" class="h-4 w-4 text-blue-600 focus:ring-blue-500 mr-2">
+                                        <label for="style-commercial" class="text-sm text-gray-700">Commercial & Corporate</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Other service details sections would be added here -->
+                        <!-- For brevity, I'm only showing catering and photography details -->
+                        
+                        <!-- Generic Service Details (shown for all selected services) -->
+                        <div id="generic-service-details" class="space-y-4">
+                            <div>
+                                <label for="service-locations" class="block text-sm font-medium text-gray-700 mb-1 required-field">Service Locations</label>
+                                <select id="service-locations" name="service-locations" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" multiple required>
+                                    <option value="Wellington">Wellington</option>
+                                    <option value="Auckland">Auckland</option>
+                                    <option value="Christchurch">Christchurch</option>
+                                    <option value="Dunedin">Dunedin</option>
+                                    <option value="Hamilton">Hamilton</option>
+                                    <option value="Tauranga">Tauranga</option>
+                                    <option value="Queenstown">Queenstown</option>
+                                    <option value="Nationwide">Nationwide</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-1">Hold Ctrl/Cmd to select multiple locations</p>
+                            </div>
+                            
+                            <div>
+                                <label for="price-range" class="block text-sm font-medium text-gray-700 mb-1 required-field">Typical Price Range</label>
+                                <select id="price-range" name="price-range" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="budget">Budget-Friendly (Under $500)</option>
+                                    <option value="mid-range">Mid-Range ($500–$2,000)</option>
+                                    <option value="premium">Premium ($2,000–$5,000)</option>
+                                    <option value="luxury">Luxury ($5,000+)</option>
+                                    <option value="varies" selected>Varies Widely (Quote-Based)</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="lead-time" class="block text-sm font-medium text-gray-700 mb-1 required-field">Typical Lead Time Required</label>
+                                <select id="lead-time" name="lead-time" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                    <option value="last-minute">Last Minute (1-7 days)</option>
+                                    <option value="short" selected>Short Notice (1-2 weeks)</option>
+                                    <option value="standard">Standard (3-4 weeks)</option>
+                                    <option value="extended">Extended (1-3 months)</option>
+                                    <option value="long">Long Term (3+ months)</option>
+                                </select>
+                                <p class="text-xs text-gray-500 mt-1">How much advance notice do you typically need?</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Business Contact Information -->
+                    <div id="step-4" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">4</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Business Contact Information</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">📞 How clients can reach you</p>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-1 required-field">Primary Contact Name</label>
+                                <input type="text" id="contact-name" name="contact-name" placeholder="Full name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="contact-role" class="block text-sm font-medium text-gray-700 mb-1 required-field">Role/Position</label>
+                                <input type="text" id="contact-role" name="contact-role" placeholder="e.g., Owner, Manager, etc." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="business-email" class="block text-sm font-medium text-gray-700 mb-1 required-field">Business Email</label>
+                                <input type="email" id="business-email" name="business-email" placeholder="your.business@example.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="business-phone" class="block text-sm font-medium text-gray-700 mb-1 required-field">Business Phone</label>
+                                <input type="tel" id="business-phone" name="business-phone" placeholder="e.g., 04 123 4567 or 021 123 4567" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            
+                            <div>
+                                <label for="business-website" class="block text-sm font-medium text-gray-700 mb-1">Business Website (Optional)</label>
+                                <input type="url" id="business-website" name="business-website" placeholder="https://www.yourbusiness.co.nz" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            
+                            <div>
+                                <label for="business-social" class="block text-sm font-medium text-gray-700 mb-1">Social Media Links (Optional)</label>
+                                <textarea id="business-social" name="business-social" rows="2" placeholder="Facebook, Instagram, LinkedIn, etc. (one per line)" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label for="business-address" class="block text-sm font-medium text-gray-700 mb-1 required-field">Business Address</label>
+                                <textarea id="business-address" name="business-address" rows="3" placeholder="Street address, city, postcode" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Review & Submit -->
+                    <div id="step-5" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">5</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Review & Submit</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">✅ Review your information and submit your registration</p>
+                        
+                        <div class="space-y-6">
+                            <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
+                                <h3 class="font-medium text-gray-700 mb-3">Business Summary</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="text-gray-500">Business Name</p>
+                                        <p id="summary-business-name" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Business Type</p>
+                                        <p id="summary-business-type" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Years in Operation</p>
+                                        <p id="summary-years" class="font-medium">Not specified</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500">Service Locations</p>
+                                        <p id="summary-locations" class="font-medium">Not specified</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <h4 class="font-medium text-gray-700 mb-2">Service Categories</h4>
+                                    <p id="summary-services" class="text-sm">None selected</p>
+                                </div>
+                                
+                                <div class="mt-4 pt-4 border-t border-gray-200">
+                                    <h4 class="font-medium text-gray-700 mb-2">Contact Information</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <p class="text-gray-500">Contact Name</p>
+                                            <p id="summary-contact-name" class="font-medium">Not specified</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500">Business Email</p>
+                                            <p id="summary-email" class="font-medium">Not specified</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-500">Business Phone</p>
+                                            <p id="summary-phone" class="font-medium">Not specified</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                <div class="flex items-start">
+                                    <div class="text-blue-500 mr-3 text-xl">📋</div>
+                                    <div>
+                                        <p class="text-sm text-blue-800 font-medium">What happens next?</p>
+                                        <p class="text-sm text-blue-800 mt-1">After submitting your registration, our team will review your information. Once approved, you'll receive login details to access your provider dashboard where you can view and bid on event opportunities.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start space-x-2">
+                                <input type="checkbox" id="terms" name="terms" class="mt-1" required>
+                                <label for="terms" class="text-sm text-gray-600">I agree to the <a href="#" class="primary-text hover:underline">Terms of Service</a>, <a href="#" class="primary-text hover:underline">Privacy Policy</a>, and confirm that the information provided is accurate.</label>
+                            </div>
+                            
+                            <button type="submit" id="submit-btn" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+                                <span class="flex items-center">
+                                    Register as Service Provider
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between pt-4 border-t border-gray-200">
+                        <button type="button" id="prev-btn" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-300 hidden">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                                </svg>
+                                Back
+                            </div>
+                        </button>
+                        <button type="button" id="next-btn" class="px-6 py-2 primary-bg text-white rounded-lg hover:bg-blue-800 transition duration-300">
+                            <div class="flex items-center">
+                                Next
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Success Modal (Hidden by default) -->
+        <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                        <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Registration Successful!</h3>
+                    <p class="text-gray-600 mb-6">Thank you for registering as a service provider with EventNest NZ. Our team will review your information and be in touch shortly.</p>
+                    <button id="close-modal" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition duration-300">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('provider-form');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const stepLabel = document.getElementById('step-label');
+            const stepCounter = document.getElementById('step-counter');
+            const successModal = document.getElementById('success-modal');
+            const closeModal = document.getElementById('close-modal');
+            const checkboxCards = document.querySelectorAll('.checkbox-card');
+            const otherServiceCheckbox = document.getElementById('other-service');
+            const otherServiceInputContainer = document.getElementById('other-service-input-container');
+            const serviceError = document.getElementById('service-error');
+            
+            let currentStep = 1;
+            const totalSteps = 5;
+            
+            // Handle checkbox card selection
+            checkboxCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Prevent triggering when clicking on the input field inside "Other Service"
+                    if (e.target.id === 'other-service-input') {
+                        return;
+                    }
+                    
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    
+                    if (checkbox.checked) {
+                        this.classList.add('selected');
+                    } else {
+                        this.classList.remove('selected');
+                    }
+                    
+                    // Show/hide "Other" service input field
+                    if (checkbox.id === 'other-service') {
+                        if (checkbox.checked) {
+                            otherServiceInputContainer.classList.remove('hidden');
+                        } else {
+                            otherServiceInputContainer.classList.add('hidden');
+                        }
+                    }
+                    
+                    // Hide error message when a service is selected
+                    if (checkbox.checked) {
+                        serviceError.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Update the form based on the current step
+            function updateForm() {
+                // Hide all sections
+                document.querySelectorAll('.form-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show current section
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                
+                // Update progress bar
+                const progress = (currentStep / totalSteps) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                // Update step indicators
+                stepCounter.textContent = `${currentStep}/${totalSteps}`;
+                
+                // Update step label
+                const stepLabels = [
+                    "Business Information",
+                    "Service Categories",
+                    "Service Details",
+                    "Business Contact Information",
+                    "Review & Submit"
+                ];
+                stepLabel.textContent = `Step ${currentStep} of ${totalSteps}: ${stepLabels[currentStep-1]}`;
+                
+                // Show/hide navigation buttons
+                if (currentStep === 1) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                if (currentStep === totalSteps) {
+                    nextBtn.classList.add('hidden');
+                } else {
+                    nextBtn.classList.remove('hidden');
+                }
+                
+                // Show appropriate service details in step 3
+                if (currentStep === 3) {
+                    updateServiceDetails();
+                }
+                
+                // Update summary on the last step
+                if (currentStep === totalSteps) {
+                    updateSummary();
+                }
+            }
+            
+            // Update service details based on selected services
+            function updateServiceDetails() {
+                // Hide all service details sections first
+                document.querySelectorAll('.service-details').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                
+                // Show details sections for selected services
+                if (document.getElementById('catering').checked) {
+                    document.getElementById('catering-details').classList.remove('hidden');
+                }
+                
+                if (document.getElementById('photography').checked) {
+                    document.getElementById('photography-details').classList.remove('hidden');
+                }
+                
+                // Additional service details would be shown here
+            }
+            
+            // Update the summary on the last step
+            function updateSummary() {
+                document.getElementById('summary-business-name').textContent = document.getElementById('business-name').value || 'Not specified';
+                
+                const businessTypeSelect = document.getElementById('business-type');
+                document.getElementById('summary-business-type').textContent = businessTypeSelect.value ? 
+                    businessTypeSelect.options[businessTypeSelect.selectedIndex].text : 'Not specified';
+                
+                const yearsSelect = document.getElementById('years-operating');
+                document.getElementById('summary-years').textContent = yearsSelect.value ? 
+                    yearsSelect.options[yearsSelect.selectedIndex].text : 'Not specified';
+                
+                // Get selected service locations
+                const locationsSelect = document.getElementById('service-locations');
+                const selectedLocations = Array.from(locationsSelect.selectedOptions).map(option => option.text);
+                document.getElementById('summary-locations').textContent = selectedLocations.length > 0 ? 
+                    selectedLocations.join(', ') : 'Not specified';
+                
+                // Get selected service categories
+                const serviceCategories = [];
+                document.querySelectorAll('input[name="service-categories"]:checked').forEach(checkbox => {
+                    if (checkbox.id === 'other-service') {
+                        const otherValue = document.getElementById('other-service-input').value;
+                        if (otherValue) {
+                            serviceCategories.push(otherValue);
+                        } else {
+                            serviceCategories.push('Other Service');
+                        }
+                    } else {
+                        serviceCategories.push(checkbox.parentElement.querySelector('.font-medium').textContent);
+                    }
+                });
+                document.getElementById('summary-services').textContent = serviceCategories.length > 0 ? 
+                    serviceCategories.join(', ') : 'None selected';
+                
+                // Contact information
+                document.getElementById('summary-contact-name').textContent = document.getElementById('contact-name').value || 'Not specified';
+                document.getElementById('summary-email').textContent = document.getElementById('business-email').value || 'Not specified';
+                document.getElementById('summary-phone').textContent = document.getElementById('business-phone').value || 'Not specified';
+            }
+            
+            // Next button click handler
+            nextBtn.addEventListener('click', function() {
+                // Simple validation for required fields in the current step
+                const currentSection = document.getElementById(`step-${currentStep}`);
+                const requiredFields = currentSection.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        isValid = false;
+                        field.classList.add('border-red-500');
+                        
+                        // If the field is a select element, also highlight its parent container
+                        if (field.tagName === 'SELECT') {
+                            field.parentElement.classList.add('shake');
+                            setTimeout(() => {
+                                field.parentElement.classList.remove('shake');
+                            }, 500);
+                        }
+                    } else {
+                        field.classList.remove('border-red-500');
+                    }
+                });
+                
+                // Special validation for service categories in step 2
+                if (currentStep === 2) {
+                    const anyServiceSelected = document.querySelector('input[name="service-categories"]:checked');
+                    if (!anyServiceSelected) {
+                        isValid = false;
+                        serviceError.classList.remove('hidden');
+                    } else {
+                        serviceError.classList.add('hidden');
+                    }
+                    
+                    // Validate "Other" service input if selected
+                    if (otherServiceCheckbox.checked && document.getElementById('other-service-input').value.trim() === '') {
+                        isValid = false;
+                        document.getElementById('other-service-input').classList.add('border-red-500');
+                    }
+                }
+                
+                // Special validation for service details in step 3
+                if (currentStep === 3) {
+                    // Validate catering details if catering is selected
+                    if (document.getElementById('catering').checked) {
+                        const cuisineSelected = document.querySelector('input[name="cuisine-types"]:checked');
+                        const serviceSelected = document.querySelector('input[name="catering-services"]:checked');
+                        
+                        if (!cuisineSelected || !serviceSelected || !document.getElementById('catering-capacity').value) {
+                            isValid = false;
+                            
+                            if (!cuisineSelected) {
+                                document.querySelector('label[for="cuisine-types"]').classList.add('text-red-500');
+                            }
+                            
+                            if (!serviceSelected) {
+                                document.querySelector('label[for="catering-services"]').classList.add('text-red-500');
+                            }
+                            
+                            if (!document.getElementById('catering-capacity').value) {
+                                document.getElementById('catering-capacity').classList.add('border-red-500');
+                            }
+                        }
+                    }
+                    
+                    // Validate photography details if photography is selected
+                    if (document.getElementById('photography').checked) {
+                        const photoServiceSelected = document.querySelector('input[name="photo-services"]:checked');
+                        const photoStyleSelected = document.querySelector('input[name="photo-styles"]:checked');
+                        
+                        if (!photoServiceSelected || !photoStyleSelected) {
+                            isValid = false;
+                            
+                            if (!photoServiceSelected) {
+                                document.querySelector('label[for="photo-services"]').classList.add('text-red-500');
+                            }
+                            
+                            if (!photoStyleSelected) {
+                                document.querySelector('label[for="photo-styles"]').classList.add('text-red-500');
+                            }
+                        }
+                    }
+                }
+                
+                if (!isValid) {
+                    // Scroll to the first invalid field
+                    const firstInvalidField = currentSection.querySelector('.border-red-500') || 
+                                            currentSection.querySelector('.text-red-500') ||
+                                            document.getElementById('service-error');
+                    if (firstInvalidField && !firstInvalidField.classList.contains('hidden')) {
+                        firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    return;
+                }
+                
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateForm();
+                    // Scroll to top of form section
+                    document.querySelector('.form-section.active').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            // Previous button click handler
+            prevBtn.addEventListener('click', function() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateForm();
+                    // Scroll to top of form section
+                    document.querySelector('.form-section.active').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+            
+            // Form submission handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Check if terms checkbox is checked
+                if (!document.getElementById('terms').checked) {
+                    alert('Please agree to the Terms of Service and Privacy Policy.');
+                    return;
+                }
+                
+                // Show success modal
+                successModal.classList.remove('hidden');
+            });
+            
+            // Close modal button
+            closeModal.addEventListener('click', function() {
+                successModal.classList.add('hidden');
+                
+                // Reset form and go back to step 1
+                form.reset();
+                currentStep = 1;
+                updateForm();
+                
+                // Reset checkbox card styling
+                checkboxCards.forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                // Hide other service input
+                otherServiceInputContainer.classList.add('hidden');
+            });
+            
+            // Initialize the form
+            updateForm();
+            
+            // Add input event listeners to remove error styling when user types
+            document.querySelectorAll('input, select, textarea').forEach(element => {
+                element.addEventListener('input', function() {
+                    this.classList.remove('border-red-500');
+                    
+                    // For checkbox groups, remove error styling from labels
+                    if (this.type === 'checkbox') {
+                        const groupLabel = document.querySelector(`label[for="${this.name}"]`);
+                        if (groupLabel) {
+                            groupLabel.classList.remove('text-red-500');
+                        }
+                    }
+                });
+            });
+            
+            // Make sure the "Other Service" input field doesn't trigger the card click
+            document.getElementById('other-service-input').addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9629701a51dad99f',t:'MTc1MzA4NzY5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
