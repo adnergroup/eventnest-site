@@ -160,14 +160,29 @@ const locations = [
     { value: "Other", text: "Other" }
 ];
 
-// Event Type options
+// Event Type options (updated with more common NZ event types)
 const eventTypes = [
-    { value: "Birthday", text: "Birthday" },
+    { value: "Birthday Celebration", text: "Birthday Celebration" },
     { value: "Wedding", text: "Wedding" },
-    { value: "Corporate", text: "Corporate" },
-    { value: "Anniversary", text: "Anniversary" },
-    { value: "Graduation", text: "Graduation" },
-    { value: "Holiday", text: "Holiday Party" },
+    { value: "Corporate Event", text: "Corporate Event" },
+    { value: "Anniversary Celebration", text: "Anniversary Celebration" },
+    { value: "Graduation Party", text: "Graduation Party" },
+    { value: "Hens Party", text: "Hens Party" },
+    { value: "Stag Party", text: "Stag Party" },
+    { value: "Baby Shower", text: "Baby Shower" },
+    { value: "Engagement Party", text: "Engagement Party" },
+    { value: "Cultural Festival", text: "Cultural Festival" },
+    { value: "Marae Event", text: "Marae Event" },
+    { value: "Community Gathering", text: "Community Gathering" },
+    { value: "Charity Gala", text: "Charity Gala" },
+    { value: "Product Launch", text: "Product Launch" },
+    { value: "Conference / Seminar", text: "Conference / Seminar" },
+    { value: "Workshop", text: "Workshop" },
+    { value: "Sports Event", text: "Sports Event" },
+    { value: "Concert / Live Show", text: "Concert / Live Show" },
+    { value: "Market / Expo", text: "Market / Expo" },
+    { value: "Private Dinner Party", text: "Private Dinner Party" },
+    { value: "Funeral / Memorial Service", text: "Funeral / Memorial Service" },
     { value: "Other", text: "Other" }
 ];
 
