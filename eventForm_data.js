@@ -140,7 +140,7 @@ const formStepsConfig = [
     { id: 'step-6', label: 'Review & Submit' }
 ];
 
-// Location options (updated with districts)
+// Location options (updated with districts, "Other" removed)
 const locations = [
     { value: "Wellington", text: "Wellington" }, // Default selected
     { value: "Northland", text: "Northland" },
@@ -156,13 +156,12 @@ const locations = [
     { value: "West Coast", text: "West Coast" },
     { value: "Canterbury", text: "Canterbury" },
     { value: "Otago", text: "Otago" },
-    { value: "Southland", text: "Southland" },
-    { value: "Other", text: "Other" }
+    { value: "Southland", text: "Southland" }
 ];
 
-// Event Type options (updated with more common NZ event types)
+// Event Type options (updated with more common NZ event types, Birthday Celebration as default)
 const eventTypes = [
-    { value: "Birthday Celebration", text: "Birthday Celebration" },
+    { value: "Birthday Celebration", text: "Birthday Celebration" }, // Set as default
     { value: "Wedding", text: "Wedding" },
     { value: "Corporate Event", text: "Corporate Event" },
     { value: "Anniversary Celebration", text: "Anniversary Celebration" },
