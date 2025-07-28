@@ -140,15 +140,23 @@ const formStepsConfig = [
     { id: 'step-6', label: 'Review & Submit' }
 ];
 
-// Location options
+// Location options (updated with districts)
 const locations = [
-    { value: "Wellington", text: "Wellington" },
+    { value: "Wellington", text: "Wellington" }, // Default selected
+    { value: "Northland", text: "Northland" },
     { value: "Auckland", text: "Auckland" },
-    { value: "Christchurch", text: "Christchurch" },
-    { value: "Dunedin", text: "Dunedin" },
-    { value: "Hamilton", text: "Hamilton" },
-    { value: "Tauranga", text: "Tauranga" },
-    { value: "Queenstown", text: "Queenstown" },
+    { value: "Waikato", text: "Waikato" },
+    { value: "Bay Of Plenty", text: "Bay Of Plenty" },
+    { value: "Gisborne", text: "Gisborne" },
+    { value: "Hawke's Bay", text: "Hawke's Bay" },
+    { value: "Taranaki", text: "Taranaki" },
+    { value: "Manawatu / Whanganui", text: "Manawatu / Whanganui" },
+    { value: "Nelson / Tasman", text: "Nelson / Tasman" },
+    { value: "Marlborough", text: "Marlborough" },
+    { value: "West Coast", text: "West Coast" },
+    { value: "Canterbury", text: "Canterbury" },
+    { value: "Otago", text: "Otago" },
+    { value: "Southland", text: "Southland" },
     { value: "Other", text: "Other" }
 ];
 
