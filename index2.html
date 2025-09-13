@@ -40,48 +40,82 @@
         .dropdown-menu {
             display: none;
         }
+        #main-header.scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Animation for primary CTAs */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 70, 245, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 70, 245, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 70, 245, 0); }
+        }
+        .cta-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Bobbing animation for chat widget */
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .chat-bob {
+            animation: bob 2.5s ease-in-out infinite;
+        }
+
+        /* General class for dynamic buttons */
+        .btn-dynamic {
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-dynamic:hover {
+            transform: translateY(-3px) scale(1.03);
+        }
+        
+        .btn-primary-hover:hover {
+             box-shadow: 0 10px 20px -10px rgba(76, 70, 245, 0.6);
+        }
+
+        .btn-secondary-hover:hover {
+             box-shadow: 0 10px 20px -10px rgba(100, 116, 139, 0.4);
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header id="main-header" class="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <!-- Logo -->
             <div class="flex items-center">
                 <img src="images/EventNest_Logo_No_BG.png" alt="Event Nest Logo" class="h-20 w-auto">
             </div>
-            <!-- Desktop Navigation -->
-            <div class="hidden md:flex items-center space-x-8 font-medium">
+            <div class="hidden md:flex items-center space-x-8 font-semibold">
                 <div class="relative dropdown">
-                    <button class="text-gray-600 hover:text-royal-blue transition-colors duration-300 flex items-center">
+                    <button class="text-royal-blue-900 hover:text-royal-blue-600 transition-colors duration-300 flex items-center">
                         For Event Organisers
                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
-                    <div class="dropdown-menu absolute top-full left-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-56">
+                    <div class="dropdown-menu absolute top-full left-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-56 font-medium">
                         <a href="#organisers" class="block px-4 py-2 text-gray-700 hover:bg-royal-blue-50 hover:text-royal-blue">How It Works</a>
                         <a href="#value" class="block px-4 py-2 text-gray-700 hover:bg-royal-blue-50 hover:text-royal-blue">Why Event Nest?</a>
                         <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-royal-blue-50 hover:text-royal-blue">Browse Categories</a>
                     </div>
                 </div>
-                <a href="#providers" class="text-gray-600 hover:text-royal-blue transition-colors duration-300">For Service Providers</a>
-                <a href="#" class="text-gray-600 hover:text-royal-blue transition-colors duration-300">Blog</a>
-                <a href="#" class="text-gray-600 hover:text-royal-blue transition-colors duration-300">About</a>
-                <a href="#" class="text-gray-600 hover:text-royal-blue transition-colors duration-300">Contact</a>
+                <a href="#providers" class="text-royal-blue-900 hover:text-royal-blue-600 transition-colors duration-300">For Service Providers</a>
+                <a href="#" class="text-royal-blue-900 hover:text-royal-blue-600 transition-colors duration-300">Blog</a>
+                <a href="#" class="text-royal-blue-900 hover:text-royal-blue-600 transition-colors duration-300">About</a>
+                <a href="#" class="text-royal-blue-900 hover:text-royal-blue-600 transition-colors duration-300">Contact</a>
             </div>
-            <!-- CTA Buttons -->
             <div class="hidden md:flex items-center space-x-4">
-                 <a href="#" class="text-royal-blue font-semibold hover:underline transition-colors">Log In</a>
-                <a href="#" class="bg-royal-blue text-white px-5 py-2 rounded-lg font-semibold hover:bg-royal-blue-600 transition-all shadow-md hover:shadow-lg">Sign Up</a>
+                 <a href="#" class="text-royal-blue font-semibold hover:underline transition-colors duration-300 inline-block hover:-translate-y-px">Log In</a>
+                <a href="#" class="bg-royal-blue text-white px-5 py-2 rounded-lg font-semibold shadow-md btn-dynamic btn-primary-hover cta-pulse">Sign Up</a>
             </div>
-            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden bg-white px-6 pb-4 space-y-2 border-t">
              <a href="#organisers" class="block text-gray-800 hover:text-royal-blue transition-colors py-2">For Event Organisers</a>
             <a href="#providers" class="block text-gray-800 hover:text-royal-blue transition-colors py-2">For Service Providers</a>
@@ -94,230 +128,198 @@
         </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="bg-royal-blue py-24 md:py-32">
-            <div class="container mx-auto px-6 text-center">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white">
-                   The Smarter Way to Organise Events in New Zealand
-                </h1>
-                <p class="text-lg md:text-xl text-royal-blue-200 max-w-3xl mx-auto mb-10">
-                    We connect event organisers with a hand-picked community of great local businesses, making it simple to find authentic, great-value services for any occasion.
-                </p>
-                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
-                    <a href="#organisers" class="w-full md:w-auto bg-white text-royal-blue px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transform transition-transform duration-300 shadow-lg">
-                        I'm an Event Organiser
-                    </a>
-                    <a href="#providers" class="w-full md:w-auto bg-gray-800 text-white px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 hover:bg-gray-700 transform transition-transform duration-300 shadow-lg">
-                        I'm a Service Provider
-                    </a>
+    <main class="container mx-auto px-6 py-12">
+        <section class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="p-6 sm:p-8 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12">
+                <div class="w-full md:w-1/2 text-center md:text-left z-10">
+                    <h1 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight text-royal-blue-900">
+                       The Smarter way to Organise Events in New Zealand
+                    </h1>
+                    <p class="text-lg text-gray-600 max-w-xl mx-auto md:mx-0 mb-10">
+                        We connect event organisers with a hand-picked community of great local businesses.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center md:justify-start items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#organisers" class="w-full sm:w-auto bg-royal-blue text-white px-8 py-3 rounded-lg font-bold text-lg shadow-lg btn-dynamic btn-primary-hover cta-pulse">
+                            I'm an Event Organiser
+                        </a>
+                        <a href="#providers" class="w-full sm:w-auto bg-gray-200 text-gray-800 px-8 py-3 rounded-lg font-bold text-lg btn-dynamic btn-secondary-hover">
+                            I'm a Service Provider
+                        </a>
+                    </div>
+                </div>
+                 <div class="w-full md:w-1/2 flex justify-center mt-8 md:mt-0">
+                    <img src="images/EventNest_Banner.png" alt="Event Nest Banner" class="max-w-full h-auto rounded-lg shadow-xl object-cover">
                 </div>
             </div>
         </section>
 
-        <!-- Value Proposition Section -->
-        <section id="value" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Event Nest NZ Advantage</h2>
-                    <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">We're more than a directory; we're a community-focused marketplace built for New Zealand.</p>
+        <section id="value" class="py-16 md:py-20">
+            <div class="text-center mb-12 md:mb-16">
+                 <h2 class="text-3xl md:text-4xl font-bold text-royal-blue-900">The Event Nest NZ Advantage</h2>
+                <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">We're more than a directory; we're a community-focused marketplace built for New Zealand.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200/50">
+                    <h3 class="text-xl font-bold text-royal-blue-900 mb-3">Local-First Discovery</h3>
+                    <p class="text-gray-600">Connect with verified providers in your community, promoting a strong "support local" ethos.</p>
                 </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-gray-200">
-                        <h3 class="text-xl font-bold text-royal-blue-800 mb-3">Local-First Discovery</h3>
-                        <p class="text-gray-600">Connect with verified providers in your community, promoting a strong "support local" ethos.</p>
-                    </div>
-                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-gray-200">
-                        <h3 class="text-xl font-bold text-royal-blue-800 mb-3">Seamless Coordination</h3>
-                        <p class="text-gray-600">Intuitive tools simplify comparing quotes, managing bookings, and coordinating your event.</p>
-                    </div>
-                    <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-gray-200">
-                        <h3 class="text-xl font-bold text-royal-blue-800 mb-3">Cultural Celebration</h3>
-                        <p class="text-gray-600">Showcasing uniquely Kiwi services like kapa haka and Pasifika performances to celebrate our heritage.</p>
-                    </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200/50">
+                    <h3 class="text-xl font-bold text-royal-blue-900 mb-3">Seamless Coordination</h3>
+                    <p class="text-gray-600">Intuitive tools simplify comparing quotes, managing bookings, and coordinating your event.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-200/50">
+                    <h3 class="text-xl font-bold text-royal-blue-900 mb-3">Cultural Celebration</h3>
+                    <p class="text-gray-600">Showcasing uniquely Kiwi services like kapa haka and Pasifika performances to celebrate our heritage.</p>
                 </div>
             </div>
         </section>
 
-        <!-- For Event Organisers Section -->
-        <section id="organisers" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">For Event Organisers</h2>
+        <section id="organisers" class="py-16 md:py-20">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-6 sm:p-8 md:p-12">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-royal-blue-900">For Event Organisers</h2>
                     <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">We simplify the entire event planning process, from discovery to booking.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <img src="images/EventNest_EventOrganiser_Banner.png" alt="Event Organiser Banner" class="rounded-lg shadow-xl w-full h-auto">
-                    </div>
                     <div class="space-y-8">
-                        <!-- Step 1 -->
                         <div class="flex items-start space-x-4">
                             <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                               </svg>
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold text-gray-800 mb-1">Discover & Connect</h3>
+                                <h3 class="text-xl font-semibold text-royal-blue-900 mb-1">Discover & Connect</h3>
                                 <p class="text-gray-600">Post your event needs and get matched with verified local providers ready to help.</p>
                             </div>
                         </div>
-                        <!-- Step 2 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H17z" />
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V7a2 2 0 012-2h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H17z" /></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold text-gray-800 mb-1">Compare & Choose</h3>
+                                <h3 class="text-xl font-semibold text-royal-blue-900 mb-1">Compare & Choose</h3>
                                 <p class="text-gray-600">Easily receive and compare quotes in one place. No more messy email chains.</p>
                             </div>
                         </div>
-                        <!-- Step 3 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
-                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                               </svg>
+                               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold text-gray-800 mb-1">Book with Confidence</h3>
+                                <h3 class="text-xl font-semibold text-royal-blue-900 mb-1">Book with Confidence</h3>
                                 <p class="text-gray-600">Manage communication, bookings, and reviews securely. Every provider is vetted for quality.</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                 <div class="text-center mt-12">
-                     <a href="#" class="bg-royal-blue text-white px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transform transition-transform duration-300 shadow-lg inline-block">
-                        Join as an Event Organiser
-                    </a>
+                    <div class="mt-8 md:mt-0">
+                        <img src="images/EventNest_EventOrganiser_Banner.png" alt="Event Organiser Banner" class="rounded-lg shadow-xl w-full h-auto">
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- For Service Providers Section -->
-        <section id="providers" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">For Service Providers</h2>
+        <section id="providers" class="py-16 md:py-20">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-6 sm:p-8 md:p-12">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-royal-blue-900">For Service Providers</h2>
                     <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">Join our network of trusted providers and connect with a dedicated audience of event organisers.</p>
                 </div>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <div class="space-y-8 md:order-2">
-                        <!-- Benefit 1 -->
+                    <div class="space-y-8">
                         <div class="flex items-start space-x-4">
                             <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                 <i class="fa fa-bullseye h-6 w-6 text-center leading-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-royal-blue-800 mb-1">Receive Quality Leads</h3>
+                                <h3 class="text-xl font-bold text-royal-blue-900 mb-1">Receive Quality Leads</h3>
                                 <p class="text-gray-600">Get access to detailed event requests from organisers actively searching for your services.</p>
                             </div>
                         </div>
-                        <!-- Benefit 2 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                 <i class="fa fa-user-circle h-6 w-6 text-center leading-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-royal-blue-800 mb-1">Manage Your Profile</h3>
+                                <h3 class="text-xl font-bold text-royal-blue-900 mb-1">Manage Your Profile</h3>
                                 <p class="text-gray-600">Showcase your offerings, manage your availability, and communicate with clients easily.</p>
                             </div>
                         </div>
-                        <!-- Benefit 3 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                 <i class="fa fa-chart-line h-6 w-6 text-center leading-6"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-royal-blue-800 mb-1">Grow Your Reputation</h3>
+                                <h3 class="text-xl font-bold text-royal-blue-900 mb-1">Grow Your Reputation</h3>
                                 <p class="text-gray-600">Collect trusted reviews and ratings to build your brand and attract more high-value bookings.</p>
                             </div>
                         </div>
                     </div>
-                     <div class="md:order-1">
+                     <div class="mt-8 md:mt-0">
                         <img src="images/EventNest_ServiceProvider_Banner.png" alt="Service Provider Banner" class="rounded-lg shadow-xl w-full h-auto">
                     </div>
-                </div>
-                 <div class="text-center mt-12">
-                     <a href="#" class="bg-royal-blue text-white px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transform transition-transform duration-300 shadow-lg inline-block">
-                        Join as a Service Provider
-                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- Final CTA -->
-        <section class="bg-royal-blue">
-            <div class="container mx-auto px-6 py-20 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Let's Create Unforgettable Events</h2>
-                <p class="text-royal-blue-200 text-lg mb-8 max-w-2xl mx-auto">Join Event Nest NZ today and discover a simpler way to plan events or grow your business.</p>
-                <a href="#" class="bg-white text-royal-blue px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transform transition-transform duration-300 shadow-lg inline-block">
+        <section class="pb-12">
+            <div class="bg-white rounded-2xl shadow-lg p-8 md:p-16 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-royal-blue-900 mb-4">Let's Create Unforgettable Events</h2>
+                <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">Join Event Nest NZ today and discover a simpler way to plan events or grow your business.</p>
+                <a href="#" class="bg-royal-blue text-white px-8 py-3 rounded-lg font-bold text-lg shadow-lg inline-block btn-dynamic btn-primary-hover cta-pulse">
                     Get Started Now
                 </a>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white">
+    <footer class="bg-gray-200 text-gray-700">
         <div class="container mx-auto px-6 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- About -->
                 <div class="col-span-1 md:col-span-2 lg:col-span-1">
-                     <img src="images/EventNest_Logo_No_BG.png" alt="Event Nest Logo" class="h-20 w-auto mb-4 invert brightness-0">
-                    <p class="text-gray-400">New Zealand's leading marketplace connecting event organisers with trusted local service providers.</p>
+                     <img src="images/EventNest_Logo_No_BG.png" alt="Event Nest Logo" class="h-20 w-auto mb-4">
+                    <p class="text-gray-600">New Zealand's leading marketplace connecting event organisers with trusted local service providers.</p>
                 </div>
-                <!-- Links -->
                 <div>
-                    <h5 class="font-bold tracking-wide uppercase text-gray-300 mb-4">Organisers</h5>
+                    <h5 class="font-bold tracking-wide uppercase text-gray-800 mb-4">Organisers</h5>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Find Providers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQs</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">How It Works</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">Find Providers</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">FAQs</a></li>
                     </ul>
                 </div>
                  <div>
-                    <h5 class="font-bold tracking-wide uppercase text-gray-300 mb-4">Providers</h5>
+                    <h5 class="font-bold tracking-wide uppercase text-gray-800 mb-4">Providers</h5>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Why Join?</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Provider Login</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">Why Join?</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">Provider Login</a></li>
                     </ul>
                 </div>
                  <div>
-                    <h5 class="font-bold tracking-wide uppercase text-gray-300 mb-4">Company</h5>
+                    <h5 class="font-bold tracking-wide uppercase text-gray-800 mb-4">Company</h5>
                     <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">Contact</a></li>
+                        <li><a href="#" class="text-gray-600 hover:text-royal-blue transition-colors">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-center">
-                <p class="text-gray-400">&copy; 2024 Event Nest NZ. All rights reserved.</p>
+            <div class="mt-12 border-t border-gray-300 pt-8 flex flex-col md:flex-row justify-between items-center text-center">
+                <p class="text-gray-500">&copy; 2025 Event Nest NZ. All rights reserved.</p>
                 <div class="flex space-x-4 mt-4 md:mt-0">
-                    <!-- Social Icons -->
-                     <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                     <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                     <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                     <a href="#" class="text-gray-500 hover:text-royal-blue"><i class="fab fa-facebook-f"></i></a>
+                     <a href="#" class="text-gray-500 hover:text-royal-blue"><i class="fab fa-instagram"></i></a>
+                     <a href="#" class="text-gray-500 hover:text-royal-blue"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Chat Support Feature -->
     <div id="chat-widget" class="fixed bottom-8 right-8 z-50">
-        <!-- Chat Bubble Button -->
-        <button id="chat-bubble" class="bg-royal-blue text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform duration-300">
+        <button id="chat-bubble" class="bg-royal-blue text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transition-transform duration-300 chat-bob">
             <i class="fas fa-comments text-2xl"></i>
         </button>
 
-        <!-- Chat Window -->
         <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 md:w-96 bg-white rounded-lg shadow-2xl flex flex-col transition-all duration-300 origin-bottom-right">
-            <!-- Header -->
             <div class="bg-royal-blue text-white p-4 rounded-t-lg flex justify-between items-center">
                 <h3 class="font-bold text-lg">Chat with Support</h3>
                 <button id="close-chat" class="text-white hover:text-royal-blue-200">
@@ -325,17 +327,14 @@
                 </button>
             </div>
 
-            <!-- Messages -->
             <div id="chat-messages" class="p-4 flex-1 h-80 overflow-y-auto">
                 <div class="flex mb-4">
                     <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs">
                         <p>Hi there! How can we help you today?</p>
                     </div>
                 </div>
-                <!-- User messages will be appended here -->
             </div>
 
-            <!-- Input -->
             <div class="p-4 border-t border-gray-200">
                 <form id="chat-form" class="flex space-x-2">
                     <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-royal-blue">
@@ -347,14 +346,12 @@
         </div>
     </div>
 
-    <!-- JS for Mobile Menu -->
     <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>
 
-    <!-- JS for Chat Widget -->
     <script>
         const chatBubble = document.getElementById('chat-bubble');
         const chatWindow = document.getElementById('chat-window');
@@ -393,6 +390,18 @@
             }
         });
     </script>
+    
+    <script>
+        // JavaScript for dynamic header
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+
 </body>
 </html>
-
