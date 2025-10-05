@@ -40,18 +40,22 @@
         .dropdown-menu {
             display: none;
         }
+        .partner-logo {
+            filter: grayscale(100%) opacity(60%);
+            transition: all 0.3s ease;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0%) opacity(100%);
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-800">
 
-    <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <!-- Logo -->
             <div class="flex items-center">
                 <img src="images/EventNest_Logo_No_BG.png" alt="Event Nest Logo" class="h-20 w-auto">
             </div>
-            <!-- Desktop Navigation -->
             <div class="hidden md:flex items-center space-x-8 font-medium">
                 <div class="relative dropdown">
                     <button class="text-gray-600 hover:text-royal-blue transition-colors duration-300 flex items-center">
@@ -61,7 +65,7 @@
                     <div class="dropdown-menu absolute top-full left-0 mt-2 bg-white shadow-lg rounded-lg py-2 w-56">
                         <a href="#organisers" class="block px-4 py-2 text-gray-700 hover:bg-royal-blue-50 hover:text-royal-blue">How It Works</a>
                         <a href="#value" class="block px-4 py-2 text-gray-700 hover:bg-royal-blue-50 hover:text-royal-blue">Why Event Nest?</a>
-                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-royal-blue-50 hover:text-royal-blue">Browse Categories</a>
+                        <a href="#categories" class="block px-4 py-2 text-gray-700 hover:bg-royal-blue-50 hover:text-royal-blue">Browse Categories</a>
                     </div>
                 </div>
                 <a href="#providers" class="text-gray-600 hover:text-royal-blue transition-colors duration-300">For Service Providers</a>
@@ -69,19 +73,16 @@
                 <a href="#" class="text-gray-600 hover:text-royal-blue transition-colors duration-300">About</a>
                 <a href="#" class="text-gray-600 hover:text-royal-blue transition-colors duration-300">Contact</a>
             </div>
-            <!-- CTA Buttons -->
             <div class="hidden md:flex items-center space-x-4">
                  <a href="#" class="text-royal-blue font-semibold hover:underline transition-colors">Log In</a>
                 <a href="#" class="bg-royal-blue text-white px-5 py-2 rounded-lg font-semibold hover:bg-royal-blue-600 transition-all shadow-md hover:shadow-lg">Sign Up</a>
             </div>
-            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-gray-700 focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </nav>
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="md:hidden hidden bg-white px-6 pb-4 space-y-2 border-t">
              <a href="#organisers" class="block text-gray-800 hover:text-royal-blue transition-colors py-2">For Event Organisers</a>
             <a href="#providers" class="block text-gray-800 hover:text-royal-blue transition-colors py-2">For Service Providers</a>
@@ -90,19 +91,18 @@
             <a href="#" class="block text-gray-800 hover:text-royal-blue transition-colors py-2">Contact</a>
             <hr class="my-2"/>
             <a href="#" class="block text-royal-blue font-semibold hover:underline text-center py-2">Log In</a>
-            <a href="#" class="block bg-royal-blue text-white text-center px-5 py-2 rounded-lg font-semibold hover:bg-royal-blue-600 transition-all shadow-sm">Sign Up</a>
+            <a href="#" class="block bg-royal-blue text-white text-center px-5 py-2 rounded-lg font-semibold hover:bg-royal-blue-600 transition-all shadow-sm w-full">Sign Up</a>
         </div>
     </header>
 
     <main>
-        <!-- Hero Section -->
         <section class="bg-royal-blue py-24 md:py-32">
             <div class="container mx-auto px-6 text-center">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white">
                    The Smarter Way to Organise Events in New Zealand
                 </h1>
                 <p class="text-lg md:text-xl text-royal-blue-200 max-w-3xl mx-auto mb-10">
-                    We connect event organisers with a hand-picked community of great local businesses, making it simple to find authentic, great-value services for any occasion.
+                    We connect event organisers with a hand-picked community of great local businesses, making it simple to find authentic, great-value services for any occasion—be it a birthday, wedding, or a community gathering.
                 </p>
                 <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
                     <a href="#organisers" class="w-full md:w-auto bg-white text-royal-blue px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transform transition-transform duration-300 shadow-lg">
@@ -115,11 +115,75 @@
             </div>
         </section>
 
-        <!-- Value Proposition Section -->
-        <section id="value" class="py-20 bg-white">
+        <section class="py-12 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <h4 class="text-center text-sm font-bold text-gray-500 uppercase tracking-widest">
+                    Powering Events For Great Kiwi Companies
+                </h4>
+                <div class="flex flex-wrap justify-center items-center mt-6 space-x-8 md:space-x-12">
+                    <img src="https://via.placeholder.com/120x50.png?text=Company+A" alt="Partner logo" class="h-8 partner-logo">
+                    <img src="https://via.placeholder.com/120x50.png?text=Business+B" alt="Partner logo" class="h-8 partner-logo">
+                    <img src="https://via.placeholder.com/120x50.png?text=Org+C" alt="Partner logo" class="h-8 partner-logo">
+                    <img src="https://via.placeholder.com/120x50.png?text=Sponsor+D" alt="Partner logo" class="h-8 partner-logo hidden sm:block">
+                    <img src="https://via.placeholder.com/120x50.png?text=Venue+E" alt="Partner logo" class="h-8 partner-logo hidden lg:block">
+                </div>
+            </div>
+        </section>
+        
+        <section id="categories" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
-                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Event Nest NZ Advantage</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Our Featured Service Categories</h2>
+                    <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">Everything you need to bring your event to life.</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-volume-up text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Audio-Visual & Technical</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-utensils text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Catering & Food</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-kiwi-bird text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Cultural Services</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-users text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Event Staffing & Coordination</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-magic text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Kids Entertainment & Activities</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-camera-retro text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Media & Entertainment</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-star text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Specialist Services</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-paint-roller text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Stage, Decor & Styling</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-truck text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Transport & Logistics</h4>
+                    </a>
+                    <a href="#" class="block p-6 bg-gray-50 rounded-lg hover:bg-royal-blue-50 hover:shadow-md transition-all">
+                        <i class="fas fa-building text-4xl text-royal-blue mb-3"></i>
+                        <h4 class="font-semibold text-gray-700">Venue & Infrastructure</h4>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="value" class="py-20 bg-gray-50"> <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Why Choose Event Nest NZ?</h2>
                     <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">We're more than a directory; we're a community-focused marketplace built for New Zealand.</p>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -129,7 +193,7 @@
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-gray-200">
                         <h3 class="text-xl font-bold text-royal-blue-800 mb-3">Seamless Coordination</h3>
-                        <p class="text-gray-600">Intuitive tools simplify comparing quotes, managing bookings, and coordinating your event.</p>
+                        <p class="text-gray-600">Our intuitive dashboard simplifies comparing quotes, managing bookings, and communicating with vendors—all in one place.</p>
                     </div>
                     <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-shadow border border-gray-200">
                         <h3 class="text-xl font-bold text-royal-blue-800 mb-3">Cultural Celebration</h3>
@@ -139,19 +203,16 @@
             </div>
         </section>
 
-        <!-- For Event Organisers Section -->
-        <section id="organisers" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
+        <section id="organisers" class="py-20 bg-white"> <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">For Event Organisers</h2>
                     <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">We simplify the entire event planning process, from discovery to booking.</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <img src="images/EventNest_EventOrganiser_Banner.png" alt="Event Organiser Banner" class="rounded-lg shadow-xl w-full h-auto">
+                        <img src="images/EventNest_EventOrganiser_Banner.png" alt="People enjoying a well-organised event" class="rounded-lg shadow-xl w-full h-auto">
                     </div>
                     <div class="space-y-8">
-                        <!-- Step 1 -->
                         <div class="flex items-start space-x-4">
                             <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -163,7 +224,6 @@
                                 <p class="text-gray-600">Post your event needs and get matched with verified local providers ready to help.</p>
                             </div>
                         </div>
-                        <!-- Step 2 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -175,7 +235,6 @@
                                 <p class="text-gray-600">Easily receive and compare quotes in one place. No more messy email chains.</p>
                             </div>
                         </div>
-                        <!-- Step 3 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -191,14 +250,13 @@
                 </div>
                  <div class="text-center mt-12">
                      <a href="#" class="bg-royal-blue text-white px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transform transition-transform duration-300 shadow-lg inline-block">
-                        Join as an Event Organiser
+                        Find Your Perfect Provider
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- For Service Providers Section -->
-        <section id="providers" class="py-20 bg-white">
+        <section id="providers" class="py-20 bg-gray-50">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800">For Service Providers</h2>
@@ -206,7 +264,6 @@
                 </div>
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div class="space-y-8 md:order-2">
-                        <!-- Benefit 1 -->
                         <div class="flex items-start space-x-4">
                             <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                 <i class="fa fa-bullseye h-6 w-6 text-center leading-6"></i>
@@ -216,7 +273,6 @@
                                 <p class="text-gray-600">Get access to detailed event requests from organisers actively searching for your services.</p>
                             </div>
                         </div>
-                        <!-- Benefit 2 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                 <i class="fa fa-user-circle h-6 w-6 text-center leading-6"></i>
@@ -226,7 +282,6 @@
                                 <p class="text-gray-600">Showcase your offerings, manage your availability, and communicate with clients easily.</p>
                             </div>
                         </div>
-                        <!-- Benefit 3 -->
                         <div class="flex items-start space-x-4">
                              <div class="bg-royal-blue/10 text-royal-blue p-3 rounded-full inline-block flex-shrink-0">
                                 <i class="fa fa-chart-line h-6 w-6 text-center leading-6"></i>
@@ -236,20 +291,64 @@
                                 <p class="text-gray-600">Collect trusted reviews and ratings to build your brand and attract more high-value bookings.</p>
                             </div>
                         </div>
+                        <div class="pt-4 mt-4 border-t border-gray-200">
+                             <h4 class="font-semibold text-lg text-gray-700 mb-2">Is it free to join?</h4>
+                             <p class="text-gray-600">Yes! Creating a profile and browsing leads is free. We operate on a success-based commission model, so we only make money when you do. <a href="#" class="text-royal-blue font-semibold hover:underline">Learn more</a>.</p>
+                        </div>
                     </div>
                      <div class="md:order-1">
-                        <img src="images/EventNest_ServiceProvider_Banner.png" alt="Service Provider Banner" class="rounded-lg shadow-xl w-full h-auto">
+                        <img src="images/EventNest_ServiceProvider_Banner.png" alt="A happy service provider using a laptop" class="rounded-lg shadow-xl w-full h-auto">
                     </div>
                 </div>
                  <div class="text-center mt-12">
                      <a href="#" class="bg-royal-blue text-white px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transform transition-transform duration-300 shadow-lg inline-block">
-                        Join as a Service Provider
+                        Start Getting Leads
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Final CTA -->
+        <section id="testimonials" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">What Our Community Says</h2>
+                    <p class="text-gray-600 mt-3 text-lg max-w-2xl mx-auto">Real stories from event organisers and providers across New Zealand.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <p class="text-gray-600 mb-6 italic">"Event Nest made finding a local caterer for our Matariki festival effortless. The platform is intuitive and the quality of providers is outstanding."</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full mr-4" src="https://i.pravatar.cc/100?u=aroha" alt="Avatar of Aroha K.">
+                            <div>
+                                <p class="font-bold text-gray-800">Aroha K.</p>
+                                <p class="text-sm text-gray-500">Wellington Community Events</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <p class="text-gray-600 mb-6 italic">"As a photographer, Event Nest has been a game-changer. I'm getting high-quality, targeted leads for corporate events that I wouldn't have found otherwise."</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full mr-4" src="https://i.pravatar.cc/100?u=david" alt="Avatar of David Chen">
+                            <div>
+                                <p class="font-bold text-gray-800">David Chen</p>
+                                <p class="text-sm text-gray-500">Auckland Event Photography</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 p-8 rounded-lg">
+                        <p class="text-gray-600 mb-6 italic">"Planning our wedding was overwhelming until we found Event Nest. We managed everything from the venue to the florist in one place. Highly recommended!"</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full mr-4" src="https://i.pravatar.cc/100?u=sarah" alt="Avatar of Sarah L.">
+                            <div>
+                                <p class="font-bold text-gray-800">Sarah L.</p>
+                                <p class="text-sm text-gray-500">Bride, Christchurch</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="bg-royal-blue">
             <div class="container mx-auto px-6 py-20 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Let's Create Unforgettable Events</h2>
@@ -261,16 +360,13 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white">
         <div class="container mx-auto px-6 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- About -->
                 <div class="col-span-1 md:col-span-2 lg:col-span-1">
                      <img src="images/EventNest_Logo_No_BG.png" alt="Event Nest Logo" class="h-20 w-auto mb-4 invert brightness-0">
                     <p class="text-gray-400">New Zealand's leading marketplace connecting event organisers with trusted local service providers.</p>
                 </div>
-                <!-- Links -->
                 <div>
                     <h5 class="font-bold tracking-wide uppercase text-gray-300 mb-4">Organisers</h5>
                     <ul class="space-y-2">
@@ -297,10 +393,9 @@
                 </div>
             </div>
             <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-center">
-                <p class="text-gray-400">&copy; 2024 Event Nest NZ. All rights reserved.</p>
+                <p class="text-gray-400">&copy; 2025 Event Nest NZ. All rights reserved.</p>
                 <div class="flex space-x-4 mt-4 md:mt-0">
-                    <!-- Social Icons -->
-                     <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
                      <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
                      <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
                 </div>
@@ -308,16 +403,12 @@
         </div>
     </footer>
 
-    <!-- Chat Support Feature -->
     <div id="chat-widget" class="fixed bottom-8 right-8 z-50">
-        <!-- Chat Bubble Button -->
         <button id="chat-bubble" class="bg-royal-blue text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center transform hover:scale-110 transition-transform duration-300">
             <i class="fas fa-comments text-2xl"></i>
         </button>
 
-        <!-- Chat Window -->
         <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 md:w-96 bg-white rounded-lg shadow-2xl flex flex-col transition-all duration-300 origin-bottom-right">
-            <!-- Header -->
             <div class="bg-royal-blue text-white p-4 rounded-t-lg flex justify-between items-center">
                 <h3 class="font-bold text-lg">Chat with Support</h3>
                 <button id="close-chat" class="text-white hover:text-royal-blue-200">
@@ -325,17 +416,14 @@
                 </button>
             </div>
 
-            <!-- Messages -->
             <div id="chat-messages" class="p-4 flex-1 h-80 overflow-y-auto">
                 <div class="flex mb-4">
                     <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs">
                         <p>Hi there! How can we help you today?</p>
                     </div>
                 </div>
-                <!-- User messages will be appended here -->
-            </div>
+                </div>
 
-            <!-- Input -->
             <div class="p-4 border-t border-gray-200">
                 <form id="chat-form" class="flex space-x-2">
                     <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-royal-blue">
@@ -347,14 +435,12 @@
         </div>
     </div>
 
-    <!-- JS for Mobile Menu -->
     <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>
 
-    <!-- JS for Chat Widget -->
     <script>
         const chatBubble = document.getElementById('chat-bubble');
         const chatWindow = document.getElementById('chat-window');
@@ -395,4 +481,3 @@
     </script>
 </body>
 </html>
-
