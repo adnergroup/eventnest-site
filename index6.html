@@ -17,9 +17,11 @@
         body { font-family: 'Inter', sans-serif; }
         .card-item, .main-btn, .header-btn { transition: all 0.2s ease-in-out; }
         .card-item:focus-visible, .main-btn:focus-visible, .header-btn:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }
-        .modal { display: none; }
-        .modal.is-open { display: flex; }
-
+        .disabled-link {
+            background: #9ca3af !important;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
         #mobile-menu {
             transform: translateY(-100%);
             transition: transform 0.3s ease-in-out;
@@ -46,11 +48,10 @@
             
             <nav class="hidden md:flex items-center space-x-4">
                 <a href="#howitworks" class="text-gray-600 hover:text-blue-600 font-medium">How It Works</a>
-                <a href="#for-providers" class="text-gray-600 hover:text-blue-600 font-medium">For Providers</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-600 font-medium">Contact Us</a>
+                <a href="https://eventnest.co.nz/contact" class="text-gray-600 hover:text-blue-600 font-medium">Contact Us</a>
                 <a href="#blog" class="text-gray-600 hover:text-blue-600 font-medium">Blog</a>
                 <a href="#about" class="text-gray-600 hover:text-blue-600 font-medium">About Us</a>
-                <button class="header-btn px-4 py-2 text-sm font-semibold text-blue-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100">List Services</button>
+                <a href="https://www.service-provider.eventnest.co.nz/landing" class="header-btn px-4 py-2 text-sm font-semibold text-blue-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100">List Services</a>
                 <button class="header-btn px-4 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700">Login</button>
             </nav>
 
@@ -64,12 +65,11 @@
         
         <div id="mobile-menu" class="md:hidden bg-white shadow-lg absolute top-[68px] left-0 w-full z-40">
             <a href="#howitworks" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">How It Works</a>
-            <a href="#for-providers" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">For Providers</a>
-            <a href="#contact" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">Contact Us</a>
+            <a href="https://eventnest.co.nz/contact" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">Contact Us</a>
             <a href="#blog" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">Blog</a>
             <a href="#about" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">About Us</a>
             <div class="p-4 border-t border-gray-100 flex flex-col space-y-3">
-                 <button class="header-btn w-full px-4 py-2 font-semibold text-blue-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100">List Services</button>
+                 <a href="https://www.service-provider.eventnest.co.nz/landing" class="header-btn block w-full text-center px-4 py-2 font-semibold text-blue-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100">List Services</a>
                  <button class="header-btn w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700">Login</button>
             </div>
         </div>
@@ -103,11 +103,10 @@
                         </div>
 
                     <div class="flex justify-center mt-10">
-                         <button
+                         <a
                             id="request-service-btn"
-                            disabled
-                            class="main-btn w-full sm:w-auto bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-10 py-4 text-lg rounded-lg disabled:bg-gray-400 disabled:from-gray-400 disabled:to-gray-400 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-px"
-                        >Request Services</button>
+                            class="main-btn w-full sm:w-auto bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-10 py-4 text-lg rounded-lg hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-px"
+                        >Request Services</a>
                     </div>
                 </div>
             </section>
@@ -148,14 +147,14 @@
                     </div>
                 </div>
                  <div class="mt-12">
-                    <button class="main-btn bg-blue-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-700">List Your Services Today</button>
+                    <a href="https://www.service-provider.eventnest.co.nz/landing" class="main-btn inline-block bg-blue-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-700">List Your Services Today</a>
                 </div>
             </section>
 
             <section id="contact" class="py-20 px-4 bg-white text-center">
                 <h2 class="text-3xl font-bold">Have Questions?</h2>
                 <p class="mt-4 text-gray-600">We're here to help make your event perfect.</p>
-                <button class="main-btn mt-6 bg-blue-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-700">Get in Touch</button>
+                <a href="https://eventnest.co.nz/contact" class="main-btn mt-6 inline-block bg-blue-600 text-white font-bold px-8 py-3 rounded-lg hover:bg-blue-700">Get in Touch</a>
             </section>
             
             <section id="blog" class="py-24 px-4 text-center bg-gray-50/50">
@@ -179,21 +178,6 @@
         </footer>
     </div>
 
-    <div id="request-modal" class="modal fixed inset-0 z-50 items-center justify-center bg-black bg-opacity-60">
-        <div id="modal-content" class="bg-white max-w-md w-[90%] rounded-lg shadow-xl p-6 m-4">
-            <h3 id="modal-title" class="text-2xl font-bold text-blue-700 mb-4">Request a Service</h3>
-            
-            <form id="request-form" class="space-y-4">
-                <div><label for="name" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label><input id="name" name="name" type="text" placeholder="e.g. Jane Doe" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"></div>
-                <div><label for="email" class="block text-sm font-medium text-gray-700 mb-1">Your Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"></div>
-                <div><label for="details" class="block text-sm font-medium text-gray-700 mb-1">Event Details</label><textarea id="details" name="details" rows="4" placeholder="Tell us more about your event..." required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"></textarea></div>
-                <button type="submit" class="main-btn w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md">Submit Request</button>
-            </form>
-
-            <div id="success-message" class="hidden text-center py-8"><svg class="mx-auto h-16 w-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><h3 class="mt-4 text-2xl font-semibold">Request Sent!</h3><p class="text-gray-600 mt-2">Vendors will be in touch shortly. Thank you!</p><button id="close-modal-btn" class="main-btn mt-6 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded">Close</button></div>
-        </div>
-    </div>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const SERVICES = [
@@ -214,11 +198,6 @@
             const requestServiceBtn = document.getElementById('request-service-btn');
             const clearSearchBtn = document.getElementById('clear-search-btn');
             const searchContainer = document.getElementById('search-container');
-            const modal = document.getElementById('request-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const requestForm = document.getElementById('request-form');
-            const successMessage = document.getElementById('success-message');
-            const closeModalBtn = document.getElementById('close-modal-btn');
             const menuBtn = document.getElementById('menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuOpenIcon = document.getElementById('menu-open-icon');
@@ -290,31 +269,16 @@
                 searchInput.focus();
             });
 
-            function updateRequestButtonState() { requestServiceBtn.disabled = !selectedService; }
-            
-            function openModal() {
-                if (!selectedService) return;
-                modalTitle.textContent = `Request for: ${selectedService}`;
-                requestForm.style.display = 'block';
-                successMessage.style.display = 'none';
-                modal.classList.add('is-open');
+            function updateRequestButtonState() {
+                const isDisabled = !selectedService;
+                requestServiceBtn.classList.toggle('disabled-link', isDisabled);
+                requestServiceBtn.setAttribute('aria-disabled', isDisabled.toString());
+                if (isDisabled) {
+                    requestServiceBtn.removeAttribute('href');
+                } else {
+                    requestServiceBtn.setAttribute('href', 'https://adnergroup.github.io/eventnest-site/service-request.html');
+                }
             }
-
-            function closeModal() {
-                modal.classList.remove('is-open');
-                setTimeout(() => requestForm.reset(), 200);
-            }
-
-            requestServiceBtn.addEventListener('click', openModal);
-            closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-            
-            requestForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                console.log('Form Submitted for service:', selectedService);
-                requestForm.style.display = 'none';
-                successMessage.style.display = 'block';
-            });
 
             function toggleMenu() {
                 const isOpen = mobileMenu.classList.toggle('is-open');
@@ -335,7 +299,9 @@
             });
             
             renderServices();
+            updateRequestButtonState();
         });
     </script>
 </body>
 </html>
+

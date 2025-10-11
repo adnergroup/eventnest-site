@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EventNest NZ - Event Organiser Request</title>
+    <title>EventNest NZ - Service Request</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪺</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -37,117 +38,70 @@
             border-radius: 4px;
             transition: width 0.5s ease;
         }
-        .primary-bg {
-            background-color: #070580;
-        }
-        .primary-light-bg {
-            background-color: rgba(7, 5, 128, 0.1);
-        }
-        .primary-border {
-            border-color: #070580;
-        }
-        .primary-text {
-            color: #070580;
-        }
-        .primary-gradient {
-            background: linear-gradient(to right, #070580, #1a18a0);
-        }
+        .primary-bg { background-color: #070580; }
+        .primary-light-bg { background-color: rgba(7, 5, 128, 0.1); }
+        .primary-border { border-color: #070580; }
+        .primary-text { color: #070580; }
+        .primary-gradient { background: linear-gradient(to right, #070580, #1a18a0); }
         .required-field::after {
             content: "*";
             color: #e53e3e;
             margin-left: 2px;
         }
-        .date-error, .validation-error {
+        .validation-error {
             color: #e53e3e;
             font-size: 0.75rem;
             margin-top: 0.25rem;
             display: none;
         }
-        /* Style for the back button */
-        .back-button {
-            background-color: #070580;
-            color: white;
-            font-weight: bold;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            float: right; /* Aligns within the container */
-            margin: 10px;
-        }
-
-        .back-button:hover {
-            background-color: #050460;
-        }
-
-        /* Custom checkbox styling */
         .checkbox-container {
             position: relative;
             display: flex;
             align-items: center;
-            min-height: 1.5rem; /* Adjust as needed */
-            padding: 0.5rem; /* Padding for visual feedback */
-            border: 1px solid #e2e8f0; /* Default border-gray-200 */
-            border-radius: 0.375rem; /* rounded-lg */
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
             transition: all 0.2s ease-in-out;
         }
-
         .checkbox-container input[type="checkbox"] {
-            /* Hide default checkbox */
             position: absolute;
             opacity: 0;
             cursor: pointer;
-            height: 0;
-            width: 0;
         }
-
         .checkbox-container label {
             display: flex;
             align-items: center;
             cursor: pointer;
             user-select: none;
-            padding-left: 1.75rem; /* Space for custom checkbox */
-            min-height: 1.5rem; /* Ensure label has enough height for alignment */
-            width: 100%; /* Make label clickable across the container */
+            padding-left: 1.75rem;
+            width: 100%;
         }
-
-        .checkbox-container label span:first-child {
+        .checkbox-container .checkmark {
             position: absolute;
-            left: 0;
+            left: 0.5rem;
             top: 50%;
             transform: translateY(-50%);
-            height: 1.25rem; /* h-5 */
-            width: 1.25rem;  /* w-5 */
+            height: 1.25rem;
+            width: 1.25rem;
             background-color: #fff;
-            border: 1px solid #d1d5db; /* border-gray-400 */
-            border-radius: 0.25rem; /* rounded */
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.2s ease-in-out;
         }
-
-        .checkbox-container input[type="checkbox"]:checked + label span:first-child {
-            background-color: #070580; /* primary-bg */
-            border-color: #070580; /* primary-bg */
+        .checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+            background-color: #070580;
+            border-color: #070580;
         }
-
-        .checkbox-container input[type="checkbox"]:checked + label span:first-child svg {
+        .checkbox-container input[type="checkbox"]:checked ~ .checkmark svg {
             opacity: 1;
         }
-
-        .checkbox-container input[type="checkbox"]:checked + label {
-            color: #070580; /* primary-text */
-        }
-
         .checkbox-container.selected {
-            border-color: #070580; /* primary-border */
-            background-color: rgba(7, 5, 128, 0.1); /* primary-light-bg */
+            border-color: #070580;
+            background-color: rgba(7, 5, 128, 0.1);
         }
-
-        /* Spinner for loading state */
         .spinner {
             border: 4px solid rgba(255, 255, 255, 0.3);
             border-top: 4px solid #fff;
@@ -156,7 +110,6 @@
             height: 24px;
             animation: spin 1s linear infinite;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -170,730 +123,354 @@
             <div class="primary-gradient p-6 md:p-8">
                 <div class="flex items-center">
                     <div class="text-white">
-                        <h1 class="text-2xl md:text-3xl font-bold">Event Nest NZ - Event Organiser Request</h1>
+                        <h1 class="text-2xl md:text-3xl font-bold">Event Nest NZ - Service Request</h1>
                         <p class="text-blue-100">Find the perfect service provider for your special event</p>
                     </div>
                 </div>
                 <!-- Progress Bar -->
                 <div class="mt-6 bg-white bg-opacity-30 rounded-full h-2">
-                    <div id="progress-bar" class="progress-bar bg-white" style="width: 16.66%;"></div>
+                    <div id="progress-bar" class="progress-bar bg-white" style="width: 25%;"></div>
                 </div>
                 <!-- Step Indicators -->
                 <div class="flex justify-between mt-2 text-xs text-white">
-                    <span id="step-label">Step 1 of 6: Event Overview</span>
-                    <span id="step-counter">1/6</span>
+                    <span id="step-label">Step 1 of 4: Event Details</span>
+                    <span id="step-counter">1/4</span>
                 </div>
             </div>
 
             <!-- Form Container -->
             <div class="p-6 md:p-8">
-                <form id="event-form" class="space-y-6">
-                    <!-- Step 1: Event Overview & Subcategory Selection -->
+                <form id="event-form" class="space-y-6" novalidate>
+                    <!-- Step 1: Event Details -->
                     <div id="step-1" class="form-section active">
-                        <div class="flex items-center mb-6">
+                         <div class="flex items-center mb-6">
                             <div class="step-indicator primary-bg text-white">1</div>
-                            <h2 class="text-xl font-semibold text-gray-800">Event Overview & Services</h2>
-                            <div>
-                                <button class="back-button" onclick="window.location.href='index.html'">
-                                    ⬅️ Go Back to Home
-                                </button>
-                            </div>
+                            <h2 class="text-xl font-semibold text-gray-800">Event Details</h2>
                         </div>
-                        <p class="text-gray-600 mb-6">📍 Establish the foundations for your event and select services</p>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1 required-field">Location</label>
-                                <select id="location" name="location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                                    <!-- Options will be dynamically loaded here -->
-                                </select>
-                                <p class="text-xs text-gray-500 mt-1">Where will your event take place?</p>
+                        <p class="text-gray-600 mb-6">Tell us about your event and what you're looking for.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div>
+                                <label for="event-title" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Title</label>
+                                <input type="text" id="event-title" name="event-title" placeholder="e.g., Sarah's 30th Birthday" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
                             </div>
-                            
-                            <div id="other-location-container" class="hidden">
-                                <label for="other-location" class="block text-sm font-medium text-gray-700 mb-1 required-field">Please specify location</label>
-                                <input type="text" id="other-location" name="other-location" placeholder="Enter your location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                            
                             <div>
                                 <label for="event-date" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Date</label>
                                 <input type="date" id="event-date" name="event-date" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                                <p class="text-xs text-gray-500 mt-1">When is your event scheduled?</p>
-                                <p id="date-error" class="date-error">Event date must be today or a future date.</p>
+                                <p id="date-error" class="validation-error">Event date must be today or a future date.</p>
                             </div>
-                            
-                            <div>
-                                <label for="event-type" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Type</label>
-                                <select id="event-type" name="event-type" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                                    <!-- Options will be dynamically loaded here -->
-                                </select>
-                                <p class="text-xs text-gray-500 mt-1">What type of event are you planning?</p>
+                             <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1 required-field">Location</label>
+                                <select id="location" name="location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></select>
                             </div>
-                            
-                            <div>
+                              <div>
                                 <label for="service-category" class="block text-sm font-medium text-gray-700 mb-1 required-field">Service Category</label>
-                                <select id="service-category" name="service-category" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                                    <!-- Options will be dynamically loaded here -->
-                                </select>
-                                <p class="text-xs text-gray-500 mt-1">What service do you need for your event?</p>
-                            </div>
-
-                            <!-- Subcategory Options (dynamically shown based on service-category selection) -->
-                            <div class="space-y-4 py-4 px-4 bg-gray-50 rounded-lg border border-gray-200" id="subcategory-options-container">
-                                <p class="text-sm text-gray-600 mb-4">Please select the specific services you need:</p>
-                                <!-- Error message for subcategories -->
-                                <p id="subcategory-error" class="validation-error">Please select at least one option.</p>
-
-                                <!-- Catering Subcategory Options -->
-                                <div id="catering-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Service Types</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-full-service" name="cateringServices[]" value="Full-service Catering (plated/buffet)">
-                                                <label for="catering-full-service"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Full-service Catering (plated/buffet)</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-food-trucks" name="cateringServices[]" value="Food Trucks & Mobile Kitchens">
-                                                <label for="catering-food-trucks"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Food Trucks & Mobile Kitchens</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-grazing" name="cateringServices[]" value="Grazing Tables & Platters">
-                                                <label for="catering-grazing"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Grazing Tables & Platters</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-dessert" name="cateringServices[]" value="Dessert Bars / Ice Cream Carts">
-                                                <label for="catering-dessert"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Dessert Bars / Ice Cream Carts</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-beverage" name="cateringServices[]" value="Beverage Services / Bartenders">
-                                                <label for="catering-beverage"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Beverage Services / Bartenders</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-alcohol-licensing" name="cateringServices[]" value="Alcohol Licensing & Management">
-                                                <label for="catering-alcohol-licensing"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Alcohol Licensing & Management</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-coffee" name="cateringServices[]" value="Coffee Carts & Mobile Baristas">
-                                                <label for="catering-coffee"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Coffee Carts & Mobile Baristas</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="catering-equipment-hire" name="cateringServices[]" value="Catering Equipment Hire (cutlery, crockery, linen)">
-                                                <label for="catering-equipment-hire"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Catering Equipment Hire (cutlery, crockery, linen)</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Cuisine Types</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-modern-nz" name="cuisineTypes[]" value="Modern New Zealand Cuisine">
-                                                <label for="cuisine-modern-nz"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Modern New Zealand Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-maori" name="cuisineTypes[]" value="Māori Cuisine">
-                                                <label for="cuisine-maori"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Māori Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-pasifika" name="cuisineTypes[]" value="Pasifika Cuisine">
-                                                <label for="cuisine-pasifika"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Pasifika Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-italian" name="cuisineTypes[]" value="Italian Cuisine">
-                                                <label for="cuisine-italian"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Italian Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-french" name="cuisineTypes[]" value="French Cuisine">
-                                                <label for="cuisine-french"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">French Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-greek" name="cuisineTypes[]" value="Greek Cuisine">
-                                                <label for="cuisine-greek"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Greek Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-mediterranean" name="cuisineTypes[]" value="Mediterranean Cuisine">
-                                                <label for="cuisine-mediterranean"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Mediterranean Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-chinese" name="cuisineTypes[]" value="Chinese Cuisine">
-                                                <label for="cuisine-chinese"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Chinese Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-japanese" name="cuisineTypes[]" value="Japanese Cuisine">
-                                                <label for="cuisine-japanese"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Japanese Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-thai" name="cuisineTypes[]" value="Thai Cuisine">
-                                                <label for="cuisine-thai"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Thai Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-korean" name="cuisineTypes[]" value="Korean Cuisine">
-                                                <label for="cuisine-korean"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Korean Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-middle-eastern" name="cuisineTypes[]" value="Middle Eastern Cuisine">
-                                                <label for="cuisine-middle-eastern"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Middle Eastern Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-south-american" name="cuisineTypes[]" value="South American Cuisine">
-                                                <label for="cuisine-south-american"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">South American Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-indian" name="cuisineTypes[]" value="Indian Cuisine">
-                                                <label for="cuisine-indian"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Indian Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-north-indian" name="cuisineTypes[]" value="North Indian Cuisine">
-                                                <label for="cuisine-north-indian"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">North Indian Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-south-indian" name="cuisineTypes[]" value="South Indian Cuisine">
-                                                <label for="cuisine-south-indian"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">South Indian Cuisine</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-indian-sweets" name="cuisineTypes[]" value="Indian Sweets & Desserts">
-                                                <label for="cuisine-indian-sweets"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Indian Sweets & Desserts</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-punjabi" name="cuisineTypes[]" value="Punjabi Cuisine (Indian)">
-                                                <label for="cuisine-punjabi"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Punjabi Cuisine (Indian)</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-hyderabadi" name="cuisineTypes[]" value="Hyderabadi Cuisine (Indian)">
-                                                <label for="cuisine-hyderabadi"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Hyderabadi Cuisine (Indian)</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-vegetarian-vegan" name="cuisineTypes[]" value="Vegetarian & Vegan">
-                                                <label for="cuisine-vegetarian-vegan"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Vegetarian & Vegan</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cuisine-health-organic" name="cuisineTypes[]" value="Health & Organic">
-                                                <label for="cuisine-health-organic"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Health & Organic</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                                        <div class="flex items-start">
-                                            <div class="text-blue-500 mr-3 text-xl">💡</div>
-                                            <p class="text-sm text-blue-800">This selection helps us match you with caterers who specialize in your preferred cuisine style.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Photography Subcategory Options -->
-                                <div id="photography-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Photography Styles</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="photography-traditional" name="photographySubservices[]" value="Traditional & Classic">
-                                                <label for="photography-traditional"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Traditional & Classic</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="photography-documentary" name="photographySubservices[]" value="Documentary & Candid">
-                                                <label for="photography-documentary"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Documentary & Candid</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="photography-artistic" name="photographySubservices[]" value="Artistic & Creative">
-                                                <label for="photography-artistic"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Artistic & Creative</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="photography-aerial" name="photographySubservices[]" value="Aerial & Drone Photography">
-                                                <label for="photography-aerial"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Aerial & Drone Photography</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="photography-portrait" name="photographySubservices[]" value="Portrait Focus">
-                                                <label for="photography-portrait"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Portrait Focus</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="photography-other" name="photographySubservices[]" value="Other">
-                                                <label for="photography-other"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Other</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                                        <div class="flex items-start">
-                                            <div class="text-blue-500 mr-3 text-xl">📸</div>
-                                            <p class="text-sm text-blue-800">Your style preference helps us match you with photographers who specialize in your desired aesthetic.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Decorations Subcategory Options -->
-                                <div id="decorations-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Decoration Styles</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="decor-elegant" name="decorationsSubservices[]" value="Elegant & Sophisticated">
-                                                <label for="decor-elegant"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Elegant & Sophisticated</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="decor-rustic" name="decorationsSubservices[]" value="Rustic & Natural">
-                                                <label for="decor-rustic"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Rustic & Natural</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="decor-modern" name="decorationsSubservices[]" value="Modern & Minimalist">
-                                                <label for="decor-modern"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Modern & Minimalist</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="decor-themed" name="decorationsSubservices[]" value="Themed Decorations">
-                                                <label for="decor-themed"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Themed Decorations</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="decor-cultural" name="decorationsSubservices[]" value="Cultural & Traditional">
-                                                <label for="decor-cultural"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Cultural & Traditional</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="decor-other" name="decorationsSubservices[]" value="Other">
-                                                <label for="decor-other"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Other</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- AV Subcategory Options -->
-                                <div id="av-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">AV Requirements</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="av-sound" name="avSubservices[]" value="Sound System Only">
-                                                <label for="av-sound"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Sound System Only</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="av-projection" name="avSubservices[]" value="Projection Equipment">
-                                                <label for="av-projection"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Projection Equipment</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="av-lighting" name="avSubservices[]" value="Lighting Setup">
-                                                <label for="av-lighting"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Lighting Setup</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="av-full-package" name="avSubservices[]" value="Full AV Package">
-                                                <label for="av-full-package"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Full AV Package</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="av-other" name="avSubservices[]" value="Other">
-                                                <label for="av-other"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Other</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Transport Subcategory Options -->
-                                <div id="transport-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Transport Types</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="transport-guest-shuttle" name="transportSubservices[]" value="Guest Shuttle Service">
-                                                <label for="transport-guest-shuttle"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Guest Shuttle Service</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="transport-equipment" name="transportSubservices[]" value="Equipment Transport">
-                                                <label for="transport-equipment"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Equipment Transport</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="transport-vip" name="transportSubservices[]" value="VIP Transportation">
-                                                <label for="transport-vip"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">VIP Transportation</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="transport-other" name="transportSubservices[]" value="Other">
-                                                <label for="transport-other"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Other</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Cleaning Subcategory Options -->
-                                <div id="cleaning-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Cleaning Services</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cleaning-pre-event" name="cleaningSubservices[]" value="Pre-Event Cleaning">
-                                                <label for="cleaning-pre-event"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Pre-Event Cleaning</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cleaning-post-event" name="cleaningSubservices[]" value="Post-Event Cleaning">
-                                                <label for="cleaning-post-event"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Post-Event Cleaning</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cleaning-waste" name="cleaningSubservices[]" value="Waste Management">
-                                                <label for="cleaning-waste"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Waste Management</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cleaning-full-service" name="cleaningSubservices[]" value="Full Service (Pre, During & Post)">
-                                                <label for="cleaning-full-service"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Full Service (Pre, During & Post)</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cleaning-other" name="cleaningSubservices[]" value="Other">
-                                                <label for="cleaning-other"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Other</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Kids Entertainment Subcategory Options -->
-                                <div id="kids-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Kids Entertainment Options</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="kids-face-painting" name="kidsSubservices[]" value="Face Painting">
-                                                <label for="kids-face-painting"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Face Painting</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="kids-games" name="kidsSubservices[]" value="Games & Activities">
-                                                <label for="kids-games"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Games & Activities</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="kids-performers" name="kidsSubservices[]" value="Performers (Clowns, Magicians, etc.)">
-                                                <label for="kids-performers"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Performers (Clowns, Magicians, etc.)</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="kids-inflatables" name="kidsSubservices[]" value="Inflatables & Play Equipment">
-                                                <label for="kids-inflatables"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Inflatables & Play Equipment</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="kids-other" name="kidsSubservices[]" value="Other">
-                                                <label for="kids-other"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Other</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Cultural Services Subcategory Options -->
-                                <div id="cultural-options" class="space-y-4 hidden">
-                                    <div class="mb-4">
-                                        <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Cultural Service Types</label>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4">
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cultural-powhiri" name="culturalSubservices[]" value="Pōwhiri (Māori Welcome Ceremony)">
-                                                <label for="cultural-powhiri"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Pōwhiri (Māori Welcome Ceremony)</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cultural-kapa-haka" name="culturalSubservices[]" value="Kapa Haka Performance">
-                                                <label for="cultural-kapa-haka"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Kapa Haka Performance</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cultural-pacific-dance" name="culturalSubservices[]" value="Pacific Island Dance Performance">
-                                                <label for="cultural-pacific-dance"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Pacific Island Dance Performance</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cultural-advisor" name="culturalSubservices[]" value="Cultural Advisor/MC">
-                                                <label for="cultural-advisor"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Cultural Advisor/MC</span></label>
-                                            </div>
-                                            <div class="checkbox-container">
-                                                <input type="checkbox" id="cultural-other" name="culturalSubservices[]" value="Other">
-                                                <label for="cultural-other"><span><svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg></span><span class="text-sm text-gray-700">Other</span></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Other Service Category Options -->
-                                <div id="other-service-options" class="space-y-4 hidden">
-                                    <div>
-                                        <label for="other-service-details" class="block text-sm font-medium text-gray-700 mb-1 required-field">Service Details</label>
-                                        <textarea id="other-service-details" name="other-service-details" rows="3" placeholder="Please describe the specific service you're looking for" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-                                    </div>
-                                    
-                                    <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                                        <div class="flex items-start">
-                                            <div class="text-blue-500 mr-3 text-xl">✨</div>
-                                            <p class="text-sm text-blue-800">The more details you provide, the better we can match you with the right service provider.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label for="guests" class="block text-sm font-medium text-gray-700 mb-1">Estimated Numbers</label>
-                                <input type="number" id="guests" name="guests" min="1" placeholder="Enter estimated numbers" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <p class="text-xs text-gray-500 mt-1">How many people will attend your event?</p>
-                            </div>
-                            
-                            <div>
-                                <label for="event-overview" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Description</label>
-                                <textarea id="event-overview" name="event-overview" rows="3" placeholder="Briefly describe your event" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
-                                <p class="text-xs text-gray-500 mt-1">Provide a brief overview of your event to help service providers understand your needs</p>
+                                <select id="service-category" name="service-category" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></select>
                             </div>
                         </div>
+                         <div id="subcategory-container" class="mt-6 space-y-4 py-4 px-4 bg-gray-50 rounded-lg border border-gray-200 hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Specific Services</label>
+                            <div id="subcategory-options" class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4"></div>
+                            <p id="subcategory-error" class="validation-error">Please select at least one service.</p>
+                        </div>
                     </div>
-
-                    <!-- Step 2: Budgeting -->
+                    
+                    <!-- Step 2: Quantity & Budget -->
                     <div id="step-2" class="form-section">
                         <div class="flex items-center mb-6">
                             <div class="step-indicator primary-bg text-white">2</div>
-                            <h2 class="text-xl font-semibold text-gray-800">Budgeting</h2>
+                            <h2 class="text-xl font-semibold text-gray-800">Quantity & Budget</h2>
                         </div>
-                        <p class="text-gray-600 mb-6">💰 Help us match you with providers in your price range</p>
-                        
-                        <div class="space-y-4">
+                        <p class="text-gray-600 mb-6">Help us understand the scale and budget for your event.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity / Guests</label>
+                                <input type="number" id="quantity" name="quantity" min="1" placeholder="e.g., 50" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
                             <div>
                                 <label for="budget" class="block text-sm font-medium text-gray-700 mb-1 required-field">Budget Range</label>
-                                <select id="budget" name="budget" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                                    <!-- Options will be dynamically loaded here -->
-                                </select>
-                                <p class="text-xs text-gray-500 mt-1">What is your approximate budget for this service?</p>
+                                <select id="budget" name="budget" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></select>
                             </div>
-                            
-                            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-                                <div class="flex items-start">
-                                    <div class="text-blue-500 mr-3 text-xl">✨</div>
-                                    <p class="text-sm text-blue-800">Providing your budget helps service providers offer packages that match your expectations without any surprises.</p>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <label for="special-notes" class="block text-sm font-medium text-gray-700 mb-1">Special Notes (Optional)</label>
+                             <textarea id="special-notes" name="special-notes" rows="4" placeholder="Any themes, dietary needs, or other important details..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
                         </div>
                     </div>
 
-                    <!-- Step 3: Service Delivery -->
-                    <div id="step-3" class="form-section">
+                    <!-- Step 3: Delivery -->
+                     <div id="step-3" class="form-section">
                         <div class="flex items-center mb-6">
                             <div class="step-indicator primary-bg text-white">3</div>
-                            <h2 class="text-xl font-semibold text-gray-800">Service Delivery</h2>
+                            <h2 class="text-xl font-semibold text-gray-800">Delivery Preference</h2>
                         </div>
-                        <p class="text-gray-600 mb-6">🚚 Choose how you'd like the service to be delivered</p>
-                        
+                        <p class="text-gray-600 mb-6">How would you like to receive your service?</p>
                         <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-3 required-field">Delivery Method</label>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div class="border rounded-lg p-4 cursor-pointer delivery-option" data-value="delivery">
-                                        <div class="flex items-center">
-                                            <input type="radio" id="delivery" name="delivery-method" value="delivery" class="h-4 w-4 text-blue-600 focus:ring-blue-500" required>
-                                            <label for="delivery" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
-                                                <div class="flex items-center">
-                                                    <span class="text-lg mr-2">🚚</span>
-                                                    Delivery to Location
-                                                </div>
-                                                <p class="text-xs text-gray-500 mt-1">Service provider will deliver to your specified address</p>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="border rounded-lg p-4 cursor-pointer delivery-option primary-border primary-light-bg" data-value="pickup">
-                                        <div class="flex items-center">
-                                            <input type="radio" id="pickup" name="delivery-method" value="pickup" class="h-4 w-4 text-blue-600 focus:ring-blue-500" checked required>
-                                            <label for="pickup" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
-                                                <div class="flex items-center">
-                                                    <span class="text-lg mr-2">🏬</span>
-                                                    Pickup
-                                                </div>
-                                                <p class="text-xs text-gray-500 mt-1">You'll pick up from the service provider's location</p>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div id="delivery-address-container" class="hidden space-y-4 mt-4 p-4 bg-gray-50 rounded-lg">
-                                <h3 class="font-medium text-gray-700">Delivery Address</h3>
-                                
-                                <div>
-                                    <label for="street-address" class="block text-sm font-medium text-gray-700 mb-1 required-field">Street Address</label>
-                                    <input type="text" id="street-address" name="street-address" placeholder="123 Queen Street" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label for="suburb" class="block text-sm font-medium text-gray-700 mb-1 required-field">Suburb</label>
-                                        <input type="text" id="suburb" name="suburb" placeholder="Wellington Central" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                    
-                                    <div>
-                                        <label for="city" class="block text-sm font-medium text-gray-700 mb-1 required-field">City</label>
-                                        <input type="text" id="city" name="city" placeholder="Wellington" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <label for="postcode" class="block text-sm font-medium text-gray-700 mb-1 required-field">Postcode</label>
-                                    <input type="text" id="postcode" name="postcode" placeholder="6011" pattern="[0-9]{4}" maxlength="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                    <p class="text-xs text-gray-500 mt-1">New Zealand postcodes are 4 digits</p>
-                                </div>
-                                
-                                <div>
-                                    <label for="delivery-notes" class="block text-sm font-medium text-gray-700 mb-1">Delivery Notes (Optional)</label>
-                                    <textarea id="delivery-notes" name="delivery-notes" rows="2" placeholder="Any special instructions for delivery (e.g., access codes, landmarks)" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-                                </div>
-                            </div>
+                            <select id="delivery-preference" name="delivery-preference" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                <option value="provider_delivers">Provider Delivers to Me</option>
+                                <option value="i_will_pickup">I Will Pick Up</option>
+                                <option value="service_at_venue">Service is At Venue</option>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- Step 4: Additional Event Details -->
+                    <!-- Step 4: Review & Submit -->
                     <div id="step-4" class="form-section">
                         <div class="flex items-center mb-6">
                             <div class="step-indicator primary-bg text-white">4</div>
-                            <h2 class="text-xl font-semibold text-gray-800">Additional Event Details</h2>
-                        </div>
-                        <p class="text-gray-600 mb-6">📝 Share any special requirements or personal touches</p>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label for="event-details" class="block text-sm font-medium text-gray-700 mb-1">Additional Details (Optional)</label>
-                                <textarea id="event-details" name="event-details" rows="5" placeholder="Please share any specific requirements, themes, dietary restrictions, or other details that will help service providers prepare the perfect proposal for your event." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
-                                <p class="text-xs text-gray-500 mt-1">Any other information that might help service providers understand your needs better</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 5: Organiser Info -->
-                    <div id="step-5" class="form-section">
-                        <div class="flex items-center mb-6">
-                            <div class="step-indicator primary-bg text-white">5</div>
-                            <h2 class="text-xl font-semibold text-gray-800">Organiser Information</h2>
-                        </div>
-                        <p class="text-gray-600 mb-6">📩 Your contact details for follow-up</p>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1 required-field">Full Name</label>
-                                <input type="text" id="name" name="name" placeholder="Your name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            </div>
-                            
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1 required-field">Email Address</label>
-                                <input type="email" id="email" name="email" placeholder="your.email@example.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            </div>
-                            
-                            <div>
-                                <label for="mobile" class="block text-sm font-medium text-gray-700 mb-1">Mobile Number (Optional)</label>
-                                <input type="tel" id="mobile" name="mobile" placeholder="e.g., 021 123 4567" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 6: Review & Submit -->
-                    <div id="step-6" class="form-section">
-                        <div class="flex items-center mb-6">
-                            <div class="step-indicator primary-bg text-white">6</div>
                             <h2 class="text-xl font-semibold text-gray-800">Review & Submit</h2>
                         </div>
-                        <p class="text-gray-600 mb-6">✅ Review your information and submit</p>
-                        
-                        <div class="space-y-6">
-                            <div class="bg-gray-50 p-5 rounded-lg border border-gray-200">
-                                <h3 class="font-medium text-gray-700 mb-3">Event Summary</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="text-gray-500">Location</p>
-                                        <p id="summary-location" class="font-medium">Not specified</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Event Date</p>
-                                        <p id="summary-date" class="font-medium">Not specified</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Event Type</p>
-                                        <p id="summary-type" class="font-medium">Not specified</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Service Category</p>
-                                        <p id="summary-service" class="font-medium">Not specified</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Estimated Numbers</p>
-                                        <p id="summary-guests" class="font-medium">Not specified</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Budget Range</p>
-                                        <p id="summary-budget" class="font-medium">Not specified</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500">Delivery Method</p>
-                                        <p id="summary-delivery" class="font-medium">Not specified</p>
-                                    </div>
-                                </div>
-                                
-                                <!-- Subcategory Summary (shown based on selected service) -->
-                                <div id="summary-subcategory-container" class="mt-4 pt-4 border-t border-gray-200 hidden">
-                                    <div>
-                                        <p class="text-gray-500" id="summary-subcategory-label">Subcategory</p>
-                                        <p id="summary-subcategory" class="font-medium">Not specified</p>
-                                    </div>
-                                </div>
-                                
-                                <!-- Delivery Address Summary (shown only if delivery is selected) -->
-                                <div id="summary-address-container" class="mt-4 pt-4 border-t border-gray-200 hidden">
-                                    <h4 class="font-medium text-gray-700 mb-2">Delivery Address</h4>
-                                    <p id="summary-address" class="text-sm">Not specified</p>
-                                </div>
-                                
-                                <!-- Event Overview Summary -->
-                                <div class="mt-4 pt-4 border-t border-gray-200">
-                                    <h4 class="font-medium text-gray-700 mb-2">Event Description</h4>
-                                    <p id="summary-overview" class="text-sm">Not specified</p>
-                                </div>
-                                <!-- Organiser Info Summary -->
-                                <div class="mt-4 pt-4 border-t border-gray-200">
-                                    <h4 class="font-medium text-gray-700 mb-2">Organiser Information</h4>
-                                    <p class="text-sm"><span class="text-gray-500">Name:</span> <span id="summary-name" class="font-medium"></span></p>
-                                    <p class="text-sm"><span class="text-gray-500">Email:</span> <span id="summary-email" class="font-medium"></span></p>
-                                    <p class="text-sm"><span class="text-gray-500">Mobile:</span> <span id="summary-mobile" class="font-medium"></span></p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start space-x-2">
-                                <input type="checkbox" id="terms" name="terms" class="mt-1" required>
-                                <label for="terms" class="text-sm text-gray-600">I agree to the <a href="#" class="primary-text hover:underline">Terms of Service</a> and <a href="#" class="primary-text hover:underline">Privacy Policy</a>.</label>
-                            </div>
-                            
+                        <p class="text-gray-600 mb-6">Please review your details before submitting.</p>
+                        <div class="bg-gray-50 p-5 rounded-lg border border-gray-200 space-y-4">
+                           <div id="summary-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm"></div>
+                           <div class="pt-4 border-t border-gray-200">
+                                <h4 class="font-medium text-gray-700 mb-2">Special Notes</h4>
+                                <p id="summary-special-notes" class="text-sm text-gray-600 whitespace-pre-wrap">None</p>
+                           </div>
+                        </div>
+                         <div class="mt-6">
                             <button type="submit" id="submit-btn" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
-                                Get Matched with Service Providers
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
+                                Submit Request
                             </button>
                         </div>
                     </div>
 
                     <!-- Navigation Buttons -->
-                    <div class="flex justify-between pt-4 border-t border-gray-200">
-                        <button type="button" id="prev-btn" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-300 hidden">
-                            <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293-2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-                                </svg>
-                                Back
-                            </div>
-                        </button>
-                        <button type="button" id="next-btn" class="px-6 py-2 primary-bg text-white rounded-lg hover:bg-blue-800 transition duration-300">
-                            <div class="flex items-center">
-                                Next
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
+                    <div class="flex justify-between pt-6 border-t border-gray-200">
+                        <button type="button" id="prev-btn" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-300 hidden">Back</button>
+                        <button type="button" id="next-btn" class="px-6 py-2 primary-bg text-white rounded-lg hover:bg-blue-800 transition duration-300 ml-auto">Next</button>
                     </div>
                 </form>
             </div>
         </div>
         
-        <!-- Success Modal (Hidden by default) -->
+        <!-- Success Modal -->
         <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-            <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
-                <div class="text-center">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
-                        <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Submission Successful!</h3>
-                    <p class="text-gray-600 mb-6">Your event details have been submitted. Our service providers will be in touch with you shortly.</p>
-                    <button id="close-modal" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition duration-300">
-                        Close
-                    </button>
+            <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4 text-center">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                    <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Request Sent!</h3>
+                <p class="text-gray-600 mb-6">Your request has been sent to relevant providers. They will be in touch shortly!</p>
+                <button id="close-modal" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- Load data.js first, then main.js -->
-    <script src="eventForm_data.js"></script>
-    <script src="eventForm_logic.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DATA ---
+        const LOCATIONS = ["Auckland", "Wellington", "Christchurch", "Queenstown", "Dunedin", "Hamilton", "Tauranga", "Other"];
+        const BUDGETS = ["Under $500", "$500 - $1,000", "$1,000 - $2,500", "$2,500 - $5,000", "$5,000 - $10,000", "Over $10,000", "Not Sure"];
+        const SERVICES = {
+            "Audio-Visual & Technical": ["Sound System", "Lighting", "Projector & Screen", "Live Streaming", "Technician Hire"],
+            "Catering & Food": ["Full-service Catering", "Food Trucks", "Grazing Tables", "Beverage Service", "Bartenders"],
+            "Cultural Services": ["Pōwhiri", "Kapa Haka", "Cultural Workshops", "Pasifika Performance"],
+            "Event Staffing & Coordination": ["Event Coordinator", "On-site Staff", "Security", "MC / Host"],
+            "Kids Entertainment": ["Bouncy Castle", "Face Painting", "Magician", "Character Appearance"],
+            "Media, Photographers & Video": ["Photographer", "Videographer", "Photo Booth", "Drone Footage"],
+            "Specialist Services": ["Florist", "Cake Maker", "Calligrapher", "Custom Favours"],
+            "Stage, Decor & Styling": ["Theming & Styling", "Furniture Hire", "Marquee Hire", "Floral Arrangements"],
+            "Transport & Logistics": ["Guest Shuttle", "VIP Transport", "Equipment Transport", "Parking Management"],
+            "Venue & Infrastructure": ["Venue Sourcing", "Marquee Hire", "Portable Toilets", "Power & Utilities"]
+        };
+
+        // --- DOM ELEMENTS ---
+        const form = document.getElementById('event-form');
+        const steps = Array.from(document.querySelectorAll('.form-section'));
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const stepLabel = document.getElementById('step-label');
+        const stepCounter = document.getElementById('step-counter');
+        const successModal = document.getElementById('success-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        const locationSelect = document.getElementById('location');
+        const budgetSelect = document.getElementById('budget');
+        const serviceCategorySelect = document.getElementById('service-category');
+        const subcategoryContainer = document.getElementById('subcategory-container');
+        const subcategoryOptionsDiv = document.getElementById('subcategory-options');
+        
+        let currentStep = 1;
+        const totalSteps = steps.length;
+
+        // --- FUNCTIONS ---
+        
+        const populateSelect = (selectElement, options) => {
+            selectElement.innerHTML = `<option value="" disabled selected>Select an option</option>`;
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                selectElement.appendChild(optionElement);
+            });
+        };
+        
+        const updateStepUI = () => {
+            steps.forEach((step, index) => {
+                step.classList.toggle('active', (index + 1) === currentStep);
+            });
+            
+            progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            stepLabel.textContent = `Step ${currentStep} of ${totalSteps}: ${steps[currentStep - 1].querySelector('h2').textContent}`;
+            stepCounter.textContent = `${currentStep}/${totalSteps}`;
+            
+            prevBtn.classList.toggle('hidden', currentStep === 1);
+            nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+            
+            if (currentStep === totalSteps) {
+                updateSummary();
+            }
+        };
+
+        const validateStep = (step) => {
+            const activeStep = steps[step - 1];
+            const inputs = activeStep.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+
+            if (step === 1) {
+                const dateInput = document.getElementById('event-date');
+                const dateError = document.getElementById('date-error');
+                const today = new Date().toISOString().split('T')[0];
+                if (dateInput.value < today) {
+                    dateError.style.display = 'block';
+                    dateInput.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    dateError.style.display = 'none';
+                }
+
+                if(subcategoryContainer.style.display !== 'none') {
+                    const checked = subcategoryContainer.querySelectorAll('input[type="checkbox"]:checked');
+                    const errorEl = document.getElementById('subcategory-error');
+                    if (checked.length === 0) {
+                        errorEl.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        errorEl.style.display = 'none';
+                    }
+                }
+            }
+            
+            return isValid;
+        };
+
+        const handleServiceCategoryChange = () => {
+            const selectedCategory = serviceCategorySelect.value;
+            const subcategories = SERVICES[selectedCategory];
+            
+            subcategoryOptionsDiv.innerHTML = '';
+            if (subcategories) {
+                subcategories.forEach(sub => {
+                    const id = sub.replace(/\s+/g, '-').toLowerCase();
+                    const div = document.createElement('div');
+                    div.className = 'checkbox-container';
+                    div.innerHTML = `
+                        <input type="checkbox" id="${id}" name="subcategory" value="${sub}">
+                        <label for="${id}" class="text-sm text-gray-700">${sub}</label>
+                        <div class="checkmark">
+                           <svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                    `;
+                    div.querySelector('input').addEventListener('change', (e) => {
+                        div.classList.toggle('selected', e.target.checked);
+                    });
+                    subcategoryOptionsDiv.appendChild(div);
+                });
+                subcategoryContainer.style.display = 'block';
+            } else {
+                subcategoryContainer.style.display = 'none';
+            }
+        };
+
+        const updateSummary = () => {
+            const formData = new FormData(form);
+            const summaryContainer = document.getElementById('summary-container');
+            summaryContainer.innerHTML = '';
+
+            const fields = {
+                "Event Title": formData.get('event-title'),
+                "Event Date": formData.get('event-date'),
+                "Location": formData.get('location'),
+                "Service Category": formData.get('service-category'),
+                "Quantity / Guests": formData.get('quantity') || 'Not specified',
+                "Budget": formData.get('budget'),
+                "Delivery": document.getElementById('delivery-preference').options[document.getElementById('delivery-preference').selectedIndex].text
+            };
+
+            for(const [key, value] of Object.entries(fields)){
+                const div = document.createElement('div');
+                div.innerHTML = `<p class="text-gray-500">${key}</p><p class="font-medium">${value || 'Not specified'}</p>`;
+                summaryContainer.appendChild(div);
+            }
+
+            const subcategories = Array.from(formData.getAll('subcategory')).join(', ');
+            if (subcategories) {
+                 const div = document.createElement('div');
+                 div.className = "md:col-span-2";
+                 div.innerHTML = `<p class="text-gray-500">Specific Services</p><p class="font-medium">${subcategories}</p>`;
+                 summaryContainer.appendChild(div);
+            }
+            
+            document.getElementById('summary-special-notes').textContent = formData.get('special-notes') || 'None';
+        };
+
+        // --- EVENT LISTENERS ---
+        nextBtn.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepUI();
+                }
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        });
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (validateStep(currentStep)) {
+                submitBtn.innerHTML = '<div class="spinner"></div>';
+                submitBtn.disabled = true;
+                // Simulate API call
+                setTimeout(() => {
+                    successModal.style.display = 'flex';
+                    submitBtn.innerHTML = 'Submit Request';
+                    submitBtn.disabled = false;
+                }, 1500);
+            }
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            successModal.style.display = 'none';
+            // Optional: reset form or redirect
+            // window.location.href = '/'; 
+        });
+
+        serviceCategorySelect.addEventListener('change', handleServiceCategoryChange);
+        
+        // --- INITIALIZATION ---
+        populateSelect(locationSelect, LOCATIONS);
+        populateSelect(budgetSelect, BUDGETS);
+        populateSelect(serviceCategorySelect, Object.keys(SERVICES));
+        updateStepUI();
+    });
+    </script>
 </body>
 </html>
+
