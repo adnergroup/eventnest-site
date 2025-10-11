@@ -69,9 +69,12 @@
                             <input
                                 id="search-input"
                                 placeholder="Search or select a category below..."
-                                class="w-full pl-11 pr-4 py-4 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-base placeholder-gray-500 shadow-inner"
+                                class="w-full pl-11 pr-12 py-4 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-base placeholder-gray-500 shadow-inner"
                                 aria-label="Search for an event service"
                             />
+                            <button id="clear-search-btn" class="hidden absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                                <svg class="h-5 w-5 text-gray-400 hover:text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" /></svg>
+                            </button>
                         </div>
                     </div>
     
@@ -157,6 +160,9 @@
             const servicesGrid = document.getElementById('services-grid');
             const searchInput = document.getElementById('search-input');
             const requestServiceBtn = document.getElementById('request-service-btn');
+            // MODIFIED: Get clear button
+            const clearSearchBtn = document.getElementById('clear-search-btn');
+            
             const modal = document.getElementById('request-modal');
             const modalTitle = document.getElementById('modal-title');
             const requestForm = document.getElementById('request-form');
@@ -168,6 +174,15 @@
             const menuCloseIcon = document.getElementById('menu-close-icon');
 
             let selectedService = '';
+
+            // MODIFIED: Function to show/hide clear button
+            function toggleClearButton() {
+                if (searchInput.value) {
+                    clearSearchBtn.classList.remove('hidden');
+                } else {
+                    clearSearchBtn.classList.add('hidden');
+                }
+            }
 
             function renderServices(filter = '') {
                 servicesGrid.innerHTML = '';
@@ -203,9 +218,11 @@
                 }
                 updateRequestButtonState();
                 renderServices(searchInput.value);
+                toggleClearButton(); // Update clear button visibility
             });
             
             servicesGrid.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.target.closest('.card-item')?.click(); e.preventDefault(); } });
+            
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value;
                 if (selectedService && !selectedService.toLowerCase().startsWith(query.toLowerCase())) {
@@ -213,6 +230,17 @@
                     updateRequestButtonState();
                 }
                 renderServices(query);
+                toggleClearButton(); // Update clear button visibility
+            });
+
+            // MODIFIED: Add click listener for clear button
+            clearSearchBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                selectedService = '';
+                updateRequestButtonState();
+                renderServices('');
+                toggleClearButton();
+                searchInput.focus(); // Keep focus on the search input
             });
 
             function updateRequestButtonState() { requestServiceBtn.disabled = !selectedService; }
