@@ -19,6 +19,24 @@
         .card-item:focus-visible, .main-btn:focus-visible, .header-btn:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }
         .modal { display: none; }
         .modal.is-open { display: flex; }
+
+        /* MODIFIED: Styles for mobile menu animation and overlay */
+        #mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        #mobile-menu.is-open {
+            transform: translateY(0);
+        }
+        #menu-overlay {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        #menu-overlay.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -37,14 +55,14 @@
             </nav>
 
             <div class="md:hidden">
-                <button id="menu-btn" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                <button id="menu-btn" class="p-2 rounded-md hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-expanded="false" aria-controls="mobile-menu">
                     <svg id="menu-open-icon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
                     <svg id="menu-close-icon" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
             </div>
         </header>
         
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute top-[68px] left-0 w-full z-40">
+        <div id="mobile-menu" class="md:hidden bg-white shadow-lg absolute top-[68px] left-0 w-full z-40">
             <a href="#howitworks" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">How It Works</a>
             <a href="#contact" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">Contact Us</a>
             <a href="#blog" class="block py-3 px-4 text-gray-700 font-medium hover:bg-blue-50">Blog</a>
@@ -54,6 +72,8 @@
                  <button class="header-btn w-full px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg shadow-sm hover:bg-blue-700">Login</button>
             </div>
         </div>
+
+        <div id="menu-overlay" class="md:hidden fixed inset-0 bg-black/40 z-30"></div>
 
         <main>
             <section class="py-20 px-4 bg-blue-100 text-center">
@@ -78,7 +98,7 @@
                         </div>
                     </div>
     
-                    <div id="services-grid" class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+                    <div id="services-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         </div>
 
                     <div class="flex justify-center mt-10">
@@ -162,7 +182,6 @@
             const requestServiceBtn = document.getElementById('request-service-btn');
             const clearSearchBtn = document.getElementById('clear-search-btn');
             const searchContainer = document.getElementById('search-container');
-            
             const modal = document.getElementById('request-modal');
             const modalTitle = document.getElementById('modal-title');
             const requestForm = document.getElementById('request-form');
@@ -172,15 +191,12 @@
             const mobileMenu = document.getElementById('mobile-menu');
             const menuOpenIcon = document.getElementById('menu-open-icon');
             const menuCloseIcon = document.getElementById('menu-close-icon');
+            const menuOverlay = document.getElementById('menu-overlay');
 
             let selectedService = '';
 
             function toggleClearButton() {
-                if (searchInput.value) {
-                    clearSearchBtn.classList.remove('hidden');
-                } else {
-                    clearSearchBtn.classList.add('hidden');
-                }
+                clearSearchBtn.classList.toggle('hidden', !searchInput.value);
             }
 
             function renderServices(filter = '') {
@@ -214,7 +230,6 @@
                 } else {
                     selectedService = serviceName;
                     searchInput.value = serviceName;
-                    // MODIFIED: Scroll to search box on selection
                     searchContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
                 updateRequestButtonState();
@@ -269,18 +284,22 @@
                 successMessage.style.display = 'block';
             });
 
-            menuBtn.addEventListener('click', () => {
-                const isMenuOpen = !mobileMenu.classList.contains('hidden');
-                mobileMenu.classList.toggle('hidden');
-                menuOpenIcon.classList.toggle('hidden', !isMenuOpen);
-                menuCloseIcon.classList.toggle('hidden', isMenuOpen);
-            });
+            // MODIFIED: Enhanced mobile menu toggle logic
+            function toggleMenu() {
+                const isOpen = mobileMenu.classList.toggle('is-open');
+                menuOverlay.classList.toggle('is-open', isOpen);
+                menuOpenIcon.classList.toggle('hidden', isOpen);
+                menuCloseIcon.classList.toggle('hidden', !isOpen);
+                menuBtn.setAttribute('aria-expanded', isOpen);
+                document.body.style.overflow = isOpen ? 'hidden' : ''; // Prevent scrolling when menu is open
+            }
+
+            menuBtn.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
 
             mobileMenu.addEventListener('click', (e) => {
                  if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
-                     mobileMenu.classList.add('hidden');
-                     menuOpenIcon.classList.remove('hidden');
-                     menuCloseIcon.classList.add('hidden');
+                     toggleMenu();
                  }
             });
             
