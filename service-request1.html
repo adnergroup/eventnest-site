@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventNest NZ - Service Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪺</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .step-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .primary-bg { background-color: #070580; }
+        .primary-light-bg { background-color: rgba(7, 5, 128, 0.1); }
+        .primary-border { border-color: #070580; }
+        .primary-text { color: #070580; }
+        .primary-gradient { background: linear-gradient(to right, #070580, #1a18a0); }
+        .required-field::after {
+            content: "*";
+            color: #e53e3e;
+            margin-left: 2px;
+        }
+        .validation-error {
+            color: #e53e3e;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .checkbox-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease-in-out;
+        }
+        .checkbox-container input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .checkbox-container label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            padding-left: 1.75rem;
+            width: 100%;
+        }
+        .checkbox-container .checkmark {
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 1.25rem;
+            width: 1.25rem;
+            background-color: #fff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease-in-out;
+        }
+        .checkbox-container input[type="checkbox"]:checked ~ .checkmark {
+            background-color: #070580;
+            border-color: #070580;
+        }
+        .checkbox-container input[type="checkbox"]:checked ~ .checkmark svg {
+            opacity: 1;
+        }
+        .checkbox-container.selected {
+            border-color: #070580;
+            background-color: rgba(7, 5, 128, 0.1);
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-4xl overflow-hidden">
+            <!-- Header -->
+            <div class="primary-gradient p-6 md:p-8">
+                <div class="flex items-center">
+                    <div class="text-white">
+                        <h1 class="text-2xl md:text-3xl font-bold">Event Nest NZ - Service Request</h1>
+                        <p class="text-blue-100">Find the perfect service provider for your special event</p>
+                    </div>
+                </div>
+                <!-- Progress Bar -->
+                <div class="mt-6 bg-white bg-opacity-30 rounded-full h-2">
+                    <div id="progress-bar" class="progress-bar bg-white" style="width: 25%;"></div>
+                </div>
+                <!-- Step Indicators -->
+                <div class="flex justify-between mt-2 text-xs text-white">
+                    <span id="step-label">Step 1 of 4: Event Details- TT</span>
+                    <span id="step-counter">1/4</span>
+                </div>
+            </div>
+
+            <!-- Form Container -->
+            <div class="p-6 md:p-8">
+                <form id="event-form" class="space-y-6" novalidate>
+                    <!-- Step 1: Event Details -->
+                    <div id="step-1" class="form-section active">
+                         <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">1</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Event Details</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">Tell us about your event and what you're looking for.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                             <div>
+                                <label for="event-title" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Title</label>
+                                <input type="text" id="event-title" name="event-title" placeholder="e.g., Sarah's 30th Birthday" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="event-date" class="block text-sm font-medium text-gray-700 mb-1 required-field">Event Date</label>
+                                <input type="date" id="event-date" name="event-date" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                <p id="date-error" class="validation-error">Event date must be today or a future date.</p>
+                            </div>
+                             <div>
+                                <label for="location" class="block text-sm font-medium text-gray-700 mb-1 required-field">Location</label>
+                                <select id="location" name="location" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></select>
+                            </div>
+                              <div>
+                                <label for="service-category" class="block text-sm font-medium text-gray-700 mb-1 required-field">Service Category</label>
+                                <select id="service-category" name="service-category" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></select>
+                            </div>
+                        </div>
+                         <div id="subcategory-container" class="mt-6 space-y-4 py-4 px-4 bg-gray-50 rounded-lg border border-gray-200 hidden">
+                            <label class="block text-sm font-medium text-gray-700 mb-2 required-field">Specific Services</label>
+                            <div id="subcategory-options" class="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-4"></div>
+                            <p id="subcategory-error" class="validation-error">Please select at least one service.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Quantity & Budget -->
+                    <div id="step-2" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">2</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Quantity & Budget</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">Help us understand the scale and budget for your event.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity / Guests</label>
+                                <input type="number" id="quantity" name="quantity" min="1" placeholder="e.g., 50" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label for="budget" class="block text-sm font-medium text-gray-700 mb-1 required-field">Budget Range</label>
+                                <select id="budget" name="budget" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></select>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <label for="special-notes" class="block text-sm font-medium text-gray-700 mb-1">Special Notes (Optional)</label>
+                             <textarea id="special-notes" name="special-notes" rows="4" placeholder="Any themes, dietary needs, or other important details..." class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Delivery -->
+                     <div id="step-3" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">3</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Delivery Preference</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">How would you like to receive your service?</p>
+                        <div class="space-y-4">
+                            <select id="delivery-preference" name="delivery-preference" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                <option value="provider_delivers">Provider Delivers to Me</option>
+                                <option value="i_will_pickup">I Will Pick Up</option>
+                                <option value="service_at_venue">Service is At Venue</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Review & Submit -->
+                    <div id="step-4" class="form-section">
+                        <div class="flex items-center mb-6">
+                            <div class="step-indicator primary-bg text-white">4</div>
+                            <h2 class="text-xl font-semibold text-gray-800">Review & Submit</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6">Please review your details before submitting.</p>
+                        <div class="bg-gray-50 p-5 rounded-lg border border-gray-200 space-y-4">
+                           <div id="summary-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm"></div>
+                           <div class="pt-4 border-t border-gray-200">
+                                <h4 class="font-medium text-gray-700 mb-2">Special Notes</h4>
+                                <p id="summary-special-notes" class="text-sm text-gray-600 whitespace-pre-wrap">None</p>
+                           </div>
+                        </div>
+                         <div class="mt-6">
+                            <button type="submit" id="submit-btn" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition duration-300 flex items-center justify-center">
+                                Submit Request
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="flex justify-between pt-6 border-t border-gray-200">
+                        <button type="button" id="prev-btn" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-300 hidden">Back</button>
+                        <button type="button" id="next-btn" class="px-6 py-2 primary-bg text-white rounded-lg hover:bg-blue-800 transition duration-300 ml-auto">Next</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Success Modal -->
+        <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+            <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4 text-center">
+                <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+                    <svg class="h-10 w-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Request Sent!</h3>
+                <p class="text-gray-600 mb-6">Your request has been sent to relevant providers. They will be in touch shortly!</p>
+                <button id="close-modal" class="w-full primary-bg hover:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DATA ---
+        const LOCATIONS = ["Auckland", "Wellington", "Christchurch", "Queenstown", "Dunedin", "Hamilton", "Tauranga", "Other"];
+        const BUDGETS = ["Under $500", "$500 - $1,000", "$1,000 - $2,500", "$2,500 - $5,000", "$5,000 - $10,000", "Over $10,000", "Not Sure"];
+        const SERVICES = {
+            "Audio-Visual & Technical": ["Sound System", "Lighting", "Projector & Screen", "Live Streaming", "Technician Hire"],
+            "Catering & Food": ["Full-service Catering", "Food Trucks", "Grazing Tables", "Beverage Service", "Bartenders"],
+            "Cultural Services": ["Pōwhiri", "Kapa Haka", "Cultural Workshops", "Pasifika Performance"],
+            "Event Staffing & Coordination": ["Event Coordinator", "On-site Staff", "Security", "MC / Host"],
+            "Kids Entertainment": ["Bouncy Castle", "Face Painting", "Magician", "Character Appearance"],
+            "Media, Photographers & Video": ["Photographer", "Videographer", "Photo Booth", "Drone Footage"],
+            "Specialist Services": ["Florist", "Cake Maker", "Calligrapher", "Custom Favours"],
+            "Stage, Decor & Styling": ["Theming & Styling", "Furniture Hire", "Marquee Hire", "Floral Arrangements"],
+            "Transport & Logistics": ["Guest Shuttle", "VIP Transport", "Equipment Transport", "Parking Management"],
+            "Venue & Infrastructure": ["Venue Sourcing", "Marquee Hire", "Portable Toilets", "Power & Utilities"]
+        };
+
+        // --- DOM ELEMENTS ---
+        const form = document.getElementById('event-form');
+        const steps = Array.from(document.querySelectorAll('.form-section'));
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const stepLabel = document.getElementById('step-label');
+        const stepCounter = document.getElementById('step-counter');
+        const successModal = document.getElementById('success-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+
+        const locationSelect = document.getElementById('location');
+        const budgetSelect = document.getElementById('budget');
+        const serviceCategorySelect = document.getElementById('service-category');
+        const subcategoryContainer = document.getElementById('subcategory-container');
+        const subcategoryOptionsDiv = document.getElementById('subcategory-options');
+        
+        let currentStep = 1;
+        const totalSteps = steps.length;
+
+        // --- FUNCTIONS ---
+        
+        const populateSelect = (selectElement, options) => {
+            selectElement.innerHTML = `<option value="" disabled selected>Select an option</option>`;
+            options.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.textContent = option;
+                selectElement.appendChild(optionElement);
+            });
+        };
+        
+        const updateStepUI = () => {
+            steps.forEach((step, index) => {
+                step.classList.toggle('active', (index + 1) === currentStep);
+            });
+            
+            progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            stepLabel.textContent = `Step ${currentStep} of ${totalSteps}: ${steps[currentStep - 1].querySelector('h2').textContent}`;
+            stepCounter.textContent = `${currentStep}/${totalSteps}`;
+            
+            prevBtn.classList.toggle('hidden', currentStep === 1);
+            nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+            
+            if (currentStep === totalSteps) {
+                updateSummary();
+            }
+        };
+
+        const validateStep = (step) => {
+            const activeStep = steps[step - 1];
+            const inputs = activeStep.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+
+            if (step === 1) {
+                const dateInput = document.getElementById('event-date');
+                const dateError = document.getElementById('date-error');
+                const today = new Date().toISOString().split('T')[0];
+                if (dateInput.value < today) {
+                    dateError.style.display = 'block';
+                    dateInput.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    dateError.style.display = 'none';
+                }
+
+                if(subcategoryContainer.style.display !== 'none') {
+                    const checked = subcategoryContainer.querySelectorAll('input[type="checkbox"]:checked');
+                    const errorEl = document.getElementById('subcategory-error');
+                    if (checked.length === 0) {
+                        errorEl.style.display = 'block';
+                        isValid = false;
+                    } else {
+                        errorEl.style.display = 'none';
+                    }
+                }
+            }
+            
+            return isValid;
+        };
+
+        const handleServiceCategoryChange = () => {
+            const selectedCategory = serviceCategorySelect.value;
+            const subcategories = SERVICES[selectedCategory];
+            
+            subcategoryOptionsDiv.innerHTML = '';
+            if (subcategories) {
+                subcategories.forEach(sub => {
+                    const id = sub.replace(/\s+/g, '-').toLowerCase();
+                    const div = document.createElement('div');
+                    div.className = 'checkbox-container';
+                    div.innerHTML = `
+                        <input type="checkbox" id="${id}" name="subcategory" value="${sub}">
+                        <label for="${id}" class="text-sm text-gray-700">${sub}</label>
+                        <div class="checkmark">
+                           <svg class="w-3 h-3 text-white opacity-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                    `;
+                    div.querySelector('input').addEventListener('change', (e) => {
+                        div.classList.toggle('selected', e.target.checked);
+                    });
+                    subcategoryOptionsDiv.appendChild(div);
+                });
+                subcategoryContainer.style.display = 'block';
+            } else {
+                subcategoryContainer.style.display = 'none';
+            }
+        };
+
+        const updateSummary = () => {
+            const formData = new FormData(form);
+            const summaryContainer = document.getElementById('summary-container');
+            summaryContainer.innerHTML = '';
+
+            const fields = {
+                "Event Title": formData.get('event-title'),
+                "Event Date": formData.get('event-date'),
+                "Location": formData.get('location'),
+                "Service Category": formData.get('service-category'),
+                "Quantity / Guests": formData.get('quantity') || 'Not specified',
+                "Budget": formData.get('budget'),
+                "Delivery": document.getElementById('delivery-preference').options[document.getElementById('delivery-preference').selectedIndex].text
+            };
+
+            for(const [key, value] of Object.entries(fields)){
+                const div = document.createElement('div');
+                div.innerHTML = `<p class="text-gray-500">${key}</p><p class="font-medium">${value || 'Not specified'}</p>`;
+                summaryContainer.appendChild(div);
+            }
+
+            const subcategories = Array.from(formData.getAll('subcategory')).join(', ');
+            if (subcategories) {
+                 const div = document.createElement('div');
+                 div.className = "md:col-span-2";
+                 div.innerHTML = `<p class="text-gray-500">Specific Services</p><p class="font-medium">${subcategories}</p>`;
+                 summaryContainer.appendChild(div);
+            }
+            
+            document.getElementById('summary-special-notes').textContent = formData.get('special-notes') || 'None';
+        };
+
+        // --- EVENT LISTENERS ---
+        nextBtn.addEventListener('click', () => {
+            if (validateStep(currentStep)) {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateStepUI();
+                }
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateStepUI();
+            }
+        });
+        
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (validateStep(currentStep)) {
+                submitBtn.innerHTML = '<div class="spinner"></div>';
+                submitBtn.disabled = true;
+                // Simulate API call
+                setTimeout(() => {
+                    successModal.style.display = 'flex';
+                    submitBtn.innerHTML = 'Submit Request';
+                    submitBtn.disabled = false;
+                }, 1500);
+            }
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            successModal.style.display = 'none';
+            // Optional: reset form or redirect
+            // window.location.href = '/'; 
+        });
+
+        serviceCategorySelect.addEventListener('change', handleServiceCategoryChange);
+        
+        // --- INITIALIZATION ---
+        populateSelect(locationSelect, LOCATIONS);
+        populateSelect(budgetSelect, BUDGETS);
+        populateSelect(serviceCategorySelect, Object.keys(SERVICES));
+        updateStepUI();
+    });
+    </script>
+</body>
+</html>
+
+
+
