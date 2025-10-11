@@ -19,17 +19,6 @@
         .card-item:focus-visible, .main-btn:focus-visible, .header-btn:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }
         .modal { display: none; }
         .modal.is-open { display: flex; }
-        /* Style for search input when button is adjacent */
-        #search-input {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-right: none;
-        }
-        /* Style for request button when adjacent */
-        #request-service-btn {
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -72,17 +61,22 @@
                 <p class="text-gray-700 text-lg md:text-xl max-w-3xl mx-auto mb-10">Got a birthday, cultural event, or community gathering coming up? Post one request, get multiple quotes, and book trusted local vendors — all in one place.</p>
     
                 <div id="services" class="max-w-5xl mx-auto">
-                    <div class="max-w-xl mx-auto mb-8 flex items-center shadow-lg">
-                        <input
-                            id="search-input"
-                            placeholder="Search or select a category below..."
-                            class="w-full p-4 border border-gray-300 rounded-l-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-base"
-                            aria-label="Search for an event service"
-                        />
+                    <div class="max-w-xl mx-auto mb-10 flex items-center shadow-xl rounded-lg">
+                        <div class="relative w-full">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" /></svg>
+                            </div>
+                            <input
+                                id="search-input"
+                                placeholder="Search or select a category below..."
+                                class="w-full pl-11 pr-4 py-4 border border-gray-300 rounded-l-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-base placeholder-gray-500 shadow-inner"
+                                aria-label="Search for an event service"
+                            />
+                        </div>
                         <button
                             id="request-service-btn"
                             disabled
-                            class="main-btn bg-green-600 text-white font-bold px-6 py-4 text-base rounded-r-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-green-700 whitespace-nowrap"
+                            class="main-btn bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold px-6 py-4 text-base rounded-r-lg disabled:bg-gray-400 disabled:from-gray-400 disabled:to-gray-400 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-px whitespace-nowrap"
                         >Request Services</button>
                     </div>
     
