@@ -17,12 +17,6 @@
         body { font-family: 'Inter', sans-serif; }
         .card-item, .main-btn, .header-btn { transition: all 0.2s ease-in-out; }
         .card-item:focus-visible, .main-btn:focus-visible, .header-btn:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid #3b82f6; outline-offset: 2px; }
-        .disabled-link {
-            background-image: none;
-            background-color: #9ca3af;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
         #mobile-menu {
             transform: translateY(-100%);
             transition: transform 0.3s ease-in-out;
@@ -122,6 +116,7 @@
                     <div class="flex justify-center mt-10">
                          <a
                             id="request-service-btn"
+                            href="event_request.html"
                             class="main-btn w-full sm:w-auto bg-blue-800 text-white font-bold px-10 py-4 text-lg rounded-lg hover:bg-blue-900 hover:shadow-lg hover:shadow-blue-800/30 hover:-translate-y-px"
                         >Request Services</a>
                     </div>
@@ -260,7 +255,6 @@
                     searchInput.value = serviceName;
                     searchContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
-                updateRequestButtonState();
                 renderServices(searchInput.value);
                 toggleClearButton();
             });
@@ -271,7 +265,6 @@
                 const query = e.target.value;
                 if (selectedService && !selectedService.toLowerCase().startsWith(query.toLowerCase())) {
                     selectedService = '';
-                    updateRequestButtonState();
                 }
                 renderServices(query);
                 toggleClearButton();
@@ -280,22 +273,10 @@
             clearSearchBtn.addEventListener('click', () => {
                 searchInput.value = '';
                 selectedService = '';
-                updateRequestButtonState();
                 renderServices('');
                 toggleClearButton();
                 searchInput.focus();
             });
-
-            function updateRequestButtonState() {
-                const isDisabled = !selectedService;
-                requestServiceBtn.classList.toggle('disabled-link', isDisabled);
-                requestServiceBtn.setAttribute('aria-disabled', isDisabled.toString());
-                if (isDisabled) {
-                    requestServiceBtn.removeAttribute('href');
-                } else {
-                    requestServiceBtn.setAttribute('href', 'https://adnergroup.github.io/eventnest-site/service-request1.html');
-                }
-            }
 
             function toggleMenu() {
                 const isOpen = mobileMenu.classList.toggle('is-open');
@@ -316,7 +297,6 @@
             });
             
             renderServices();
-            updateRequestButtonState();
         });
     </script>
 </body>

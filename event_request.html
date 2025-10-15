@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Service - Event Nest NZ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            color: #1e40af; /* dark blue */
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .form-label {
+            @apply block text-sm font-semibold text-blue-900 mb-1.5;
+        }
+        .form-input {
+            @apply block w-full px-4 py-2.5 bg-white border border-slate-300 rounded-lg shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm transition text-blue-900;
+        }
+        .form-input.invalid, .form-input.error {
+            @apply border-red-500 ring-1 ring-red-500;
+        }
+        .error-message {
+            @apply text-red-600 text-xs mt-1.5;
+        }
+        .action-button {
+            @apply w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-base font-bold focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-150 ease-in-out;
+        }
+        
+        /* Step Animation */
+        .step {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            will-change: transform, opacity;
+        }
+        .step-hidden {
+            position: absolute;
+            opacity: 0;
+            transform: translateX(20px);
+            pointer-events: none;
+            visibility: hidden;
+        }
+        .step-visible {
+            position: static;
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+            visibility: visible;
+        }
+        .step-exit {
+             transform: translateX(-20px);
+        }
+
+        /* Progress Stepper */
+        .progress-step { @apply transition-all duration-500 ease-in-out; }
+        .progress-step .progress-circle { @apply transition-all duration-500 ease-in-out; }
+        .progress-step .progress-label { @apply transition-all duration-500 ease-in-out; }
+        .progress-connector { @apply transition-all duration-500 ease-in-out; }
+
+        /* Active/Complete State */
+        .progress-step.active .progress-circle { @apply bg-blue-800 text-white border-blue-800; }
+        .progress-step.active .progress-label { @apply text-blue-900; }
+
+        /* Incomplete State */
+        .progress-step.incomplete .progress-circle { @apply bg-white text-slate-400 border-2 border-slate-300; }
+        .progress-step.incomplete .progress-label { @apply text-slate-400; }
+
+        .progress-connector.active { @apply border-blue-800; }
+        .progress-connector.incomplete { @apply border-slate-300; }
+        
+        /* Custom Checkbox Styling */
+        .service-checkbox-label {
+            @apply inline-block w-full px-4 py-3 text-center text-sm font-medium text-blue-900 bg-white border-2 border-slate-200 rounded-lg cursor-pointer transition-colors duration-200 hover:bg-blue-50 hover:border-blue-300;
+        }
+        .service-checkbox:checked + .service-checkbox-label {
+            @apply bg-blue-100 border-blue-800 text-blue-900 ring-2 ring-blue-200;
+        }
+        .service-checkbox {
+            @apply absolute opacity-0 w-0 h-0;
+        }
+
+    </style>
+</head>
+<body class="bg-slate-50">
+    <div class="max-w-3xl mx-auto pt-8 px-4">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-900 tracking-tight">Request Event Services</h1>
+        </div>
+
+        <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+            <!-- Progress Stepper -->
+            <div id="progress-stepper" class="mb-8">
+                <div class="flex items-center">
+                    <!-- Step 1 -->
+                    <div id="progress-1" class="progress-step flex items-center active">
+                        <div class="progress-circle w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg border-2">1</div>
+                        <div class="progress-label ml-3 hidden sm:block">
+                            <div class="font-bold text-sm">Event Basics</div>
+                            <div class="text-xs">Step 1</div>
+                        </div>
+                    </div>
+
+                    <!-- Connector 1 -->
+                    <div id="connector-1" class="progress-connector flex-auto border-t-4 mx-4 incomplete"></div>
+
+                    <!-- Step 2 -->
+                    <div id="progress-2" class="progress-step flex items-center incomplete">
+                        <div class="progress-circle w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg border-2">2</div>
+                         <div class="progress-label ml-3 hidden sm:block">
+                            <div class="font-bold text-sm">Service Details</div>
+                            <div class="text-xs">Step 2</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Connector 2 -->
+                    <div id="connector-2" class="progress-connector flex-auto border-t-4 mx-4 incomplete"></div>
+
+                    <!-- Step 3 -->
+                    <div id="progress-3" class="progress-step flex items-center incomplete">
+                        <div class="progress-circle w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg border-2">3</div>
+                         <div class="progress-label ml-3 hidden sm:block">
+                            <div class="font-bold text-sm">Logistics</div>
+                            <div class="text-xs">Step 3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <form id="multi-step-form" class="relative overflow-hidden">
+                <!-- Step 1: Event Basics -->
+                <div id="step-1" class="step step-visible">
+                     <h2 class="text-xl font-bold text-blue-900 border-b border-slate-200 pb-3 mb-6">Event Details</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="sm:col-span-2">
+                            <label for="event-title" class="form-label">Event Title</label>
+                            <input type="text" name="event-title" id="event-title" class="form-input" placeholder="e.g., Jane's 30th Birthday" required>
+                        </div>
+                        <div>
+                            <label for="event-date" class="form-label">Event Date</label>
+                            <input type="date" name="event-date" id="event-date" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="event-location" class="form-label">Event Location</label>
+                            <select id="event-location" name="event-location" class="form-input" required>
+                                <option value="" disabled selected>Select a city</option>
+                                <optgroup label="North Island">
+                                    <option value="Auckland">Auckland</option><option value="Wellington">Wellington</option><option value="Hamilton">Hamilton</option><option value="Tauranga">Tauranga</option><option value="Lower Hutt">Lower Hutt</option><option value="Palmerston North">Palmerston North</option><option value="Napier">Napier</option><option value="Porirua">Porirua</option><option value="New Plymouth">New Plymouth</option><option value="Rotorua">Rotorua</option><option value="Whangārei">Whangārei</option><option value="Gisborne">Gisborne</option><option value="Whanganui">Whanganui</option>
+                                </optgroup>
+                                <optgroup label="South Island">
+                                    <option value="Christchurch">Christchurch</option><option value="Dunedin">Dunedin</option><option value="Invercargill">Invercargill</option><option value="Nelson">Nelson</option><option value="Queenstown">Queenstown</option><option value="Blenheim">Blenheim</option><option value="Timaru">Timaru</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Service Details -->
+                <div id="step-2" class="step step-hidden">
+                     <h2 class="text-xl font-bold text-blue-900 border-b border-slate-200 pb-3 mb-6">Service Details</h2>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="service-needed" class="form-label">Service Category</label>
+                            <select id="service-needed" name="service-needed" class="form-input" required>
+                                <option value="">Select a category...</option>
+                                <option>Audio-Visual & Technical</option><option>Catering & Food</option><option>Cultural Services</option><option>Event Staffing & Coordination</option><option>Kids Entertainment</option><option>Media, Photographers & Video</option><option>Specialist Services</option><option>Stage, Decor & Styling</option><option>Transport & Logistics</option><option>Venue & Infrastructure</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="quantity" class="form-label">Quantity <span class="text-slate-500 font-normal">(Optional)</span></label>
+                            <input type="number" name="quantity" id="quantity" class="form-input" placeholder="e.g., 50">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="form-label">Specific Services Required</label>
+                            <div id="specific-services-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                                 <p class="text-sm text-slate-500 col-span-full">Please select a service category first.</p>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="service-details" class="form-label">More Details About Your Request <span class="text-slate-500 font-normal">(Optional)</span></label>
+                            <textarea id="service-details" name="service-details" rows="4" class="form-input" placeholder="Describe what you need, e.g., 'Outdoor sound system for 100 people'..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Logistics & Budget -->
+                <div id="step-3" class="step step-hidden">
+                    <h2 class="text-xl font-bold text-blue-900 border-b border-slate-200 pb-3 mb-6">Logistics & Final Details</h2>
+                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="sm:col-span-2">
+                            <label class="form-label">Service Delivery</label>
+                            <fieldset>
+                                <div class="flex items-center gap-x-8">
+                                    <div class="flex items-center">
+                                        <input id="delivery-onsite" name="service-delivery" type="radio" value="onsite" checked class="h-4 w-4 text-blue-800 border-gray-300 focus:ring-blue-500">
+                                        <label for="delivery-onsite" class="ml-3 block text-sm font-medium text-blue-900">On-site Service</label>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <input id="delivery-delivery" name="service-delivery" type="radio" value="delivery" class="h-4 w-4 text-blue-800 border-gray-300 focus:ring-blue-500">
+                                        <label for="delivery-delivery" class="ml-3 block text-sm font-medium text-blue-900">Delivery Only</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div id="onsite-address-section" class="sm:col-span-2">
+                            <label for="onsite-address" class="form-label">On-site Service Address</label>
+                            <input type="text" name="onsite-address" id="onsite-address" class="form-input" placeholder="Enter the venue or event address" required>
+                        </div>
+                        <div id="delivery-address-section" class="hidden sm:col-span-2">
+                            <label for="delivery-address" class="form-label">Delivery Address</label>
+                            <input type="text" name="delivery-address" id="delivery-address" class="form-input" placeholder="Enter the delivery address">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="budget" class="form-label">Budget Range</label>
+                            <select id="budget" name="budget" class="form-input" required>
+                                <option value="">Select a budget range</option>
+                                <option value="under-500">$0 - $500</option><option value="500-1000">$500 - $1,000</option><option value="1000-2500">$1,000 - $2,500</option><option value="2500-5000">$2,500 - $5,000</option><option value="5000-10000">$5,000 - $10,000</option><option value="over-10000">$10,000+</option>
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label for="additional-info" class="form-label">Additional Information <span class="text-slate-500 font-normal">(Optional)</span></label>
+                            <textarea id="additional-info" name="additional-info" rows="3" class="form-input" placeholder="Any other details, like allergies, accessibility needs, parking info, etc."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Navigation -->
+                <div class="mt-8 pt-6 border-t border-slate-200">
+                    <div class="flex justify-between items-center">
+                         <button type="button" id="back-btn" class="action-button bg-white text-blue-800 border-blue-300 border hover:bg-blue-50">
+                            <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.79 5.23a.75.75
+ 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>
+                            Back
+                         </button>
+                         <button type="button" id="next-btn" class="action-button bg-blue-800 text-white hover:bg-blue-900">
+                            Next
+                            <svg class="h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>
+                         </button>
+                         <button type="submit" id="submit-btn" class="action-button bg-blue-800 text-white hover:bg-blue-900">
+                            <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path d="M3.105 3.105a1.5 1.5 0 012.122 0l1.414 1.414a1.5 1.5 0 010 2.122l-1.414 1.414a1.5 1.5 0 01-2.122 0l-1.414-1.414a1.5 1.5 0 010-2.122l1.414-1.414zM4.166 11.53a1.5 1.5 0 00-2.122 0l-1.414 1.414a1.5 1.5 0 000 2.122l1.414 1.414a1.5 1.5 0 002.122 0l1.414-1.414a1.5 1.5 0 000-2.122l-1.414-1.414zM11.53 4.166a1.5 1.5 0 000-2.122L10.116.63a1.5 1.5 0 00-2.122 0L6.58 2.044a1.5 1.5 0 000 2.122l1.414 1.414a1.5 1.5 0 002.122 0l1.414-1.414zM10.884 8.586a1.5 1.5 0 10-2.122-2.122 1.5 1.5 0 002.122 2.122zM8.586 10.884a1.5 1.5 0 102.122 2.122 1.5 1.5 0 00-2.122-2.122zM15.956 9.874a1.5 1.5 0 010 2.122l-1.414 1.414a1.5 1.5 0 01-2.122 0l-1.414-1.414a1.5 1.5 0 010-2.122l1.414-1.414a1.5 1.5 0 012.122 0l1.414 1.414z" /></svg>
+                            Submit Request
+                         </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <a href="index6.html" class="mt-6 mb-8 block text-center text-sm font-medium text-blue-700 hover:text-blue-600">
+            &larr; Back to Home
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('multi-step-form');
+            const steps = [...document.querySelectorAll('.step')];
+            const nextBtn = document.getElementById('next-btn');
+            const backBtn = document.getElementById('back-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            const progressSteps = [
+                document.getElementById('progress-1'),
+                document.getElementById('progress-2'),
+                document.getElementById('progress-3')
+            ];
+            const progressConnectors = [
+                document.getElementById('connector-1'),
+                document.getElementById('connector-2')
+            ];
+
+            let currentStep = 0;
+
+            const serviceNeededSelect = document.getElementById('service-needed');
+            const specificServicesContainer = document.getElementById('specific-services-container');
+            const serviceOptions = {
+                "Audio-Visual & Technical": ["Sound System", "Lighting", "Projector & Screen", "Live Streaming", "Technician"],
+                "Catering & Food": ["Full-Service Catering", "Food Truck", "Bar Services", "Dessert Table", "Buffet"],
+                "Cultural Services": ["Kapa Haka Performance", "Whakairo (Carving)", "Tā moko (Tattooing)", "Cultural Workshops"],
+                "Event Staffing & Coordination": ["Event Planner", "On-site Coordinator", "Waitstaff", "Security", "Ushers"],
+                "Kids Entertainment": ["Bouncy Castle", "Face Painting", "Magician", "Balloon Twisting", "Character Appearance"],
+                "Media, Photographers & Video": ["Photography", "Videography", "Photo Booth", "Drone Footage"],
+                "Specialist Services": ["Fireworks", "Valet Parking", "Calligraphy", "Pet Attendant"],
+                "Stage, Decor & Styling": ["Florist", "Event Stylist", "Furniture Hire", "Marquee Hire", "Backdrops"],
+                "Transport & Logistics": ["Guest Shuttle", "Luxury Car Hire", "Equipment Transport"],
+                "Venue & Infrastructure": ["Venue Hire", "Portable Toilets", "Generator Hire", "Heating/Cooling"]
+            };
+
+            function updateSpecificServices() {
+                const selectedService = serviceNeededSelect.value;
+                const options = serviceOptions[selectedService] || [];
+                specificServicesContainer.innerHTML = '';
+                if (options.length === 0) {
+                     specificServicesContainer.innerHTML = '<p class="text-sm text-slate-500 col-span-full">Please select a service category first.</p>';
+                     return;
+                }
+                options.forEach(option => {
+                    const optionId = `service-${option.toLowerCase().replace(/\s+/g, '-')}`;
+                    const div = document.createElement('div');
+                    div.className = 'relative';
+                    const checkbox = document.createElement('input');
+                    checkbox.id = optionId;
+                    checkbox.name = 'specific-services';
+                    checkbox.type = 'checkbox';
+                    checkbox.value = option;
+                    checkbox.className = 'service-checkbox';
+                    const label = document.createElement('label');
+                    label.htmlFor = optionId;
+                    label.className = 'service-checkbox-label';
+                    label.textContent = option;
+                    div.appendChild(checkbox);
+                    div.appendChild(label);
+                    specificServicesContainer.appendChild(div);
+                });
+            }
+            serviceNeededSelect.addEventListener('change', updateSpecificServices);
+
+            const onsiteRadio = document.getElementById('delivery-onsite');
+            const deliveryRadio = document.getElementById('delivery-delivery');
+            const onsiteAddressSection = document.getElementById('onsite-address-section');
+            const deliveryAddressSection = document.getElementById('delivery-address-section');
+            const onsiteAddressInput = document.getElementById('onsite-address');
+            const deliveryAddressInput = document.getElementById('delivery-address');
+
+            function toggleAddressFields() {
+                if (deliveryRadio.checked) {
+                    onsiteAddressSection.classList.add('hidden');
+                    deliveryAddressSection.classList.remove('hidden');
+                    onsiteAddressInput.removeAttribute('required');
+                    deliveryAddressInput.setAttribute('required', '');
+                } else {
+                    onsiteAddressSection.classList.remove('hidden');
+                    deliveryAddressSection.classList.add('hidden');
+                    deliveryAddressInput.removeAttribute('required');
+                    onsiteAddressInput.setAttribute('required', '');
+                }
+            }
+            [onsiteRadio, deliveryRadio].forEach(el => el.addEventListener('change', toggleAddressFields));
+            
+            function showStep(stepIndex) {
+                steps.forEach((step, index) => {
+                    if (index === stepIndex) {
+                        step.classList.remove('step-hidden', 'step-exit');
+                        step.classList.add('step-visible');
+                    } else {
+                        step.classList.add('step-hidden');
+                        step.classList.remove('step-visible', 'step-exit');
+                    }
+                });
+                
+                if (stepIndex > currentStep) { // Moving forward
+                     steps[currentStep].classList.add('step-exit');
+                }
+
+                // Update progress stepper
+                progressSteps.forEach((step, index) => {
+                    if (index < stepIndex) {
+                        step.classList.add('active');
+                        step.classList.remove('incomplete');
+                    } else if (index === stepIndex) {
+                        step.classList.add('active');
+                        step.classList.remove('incomplete');
+                    } else {
+                        step.classList.remove('active');
+                        step.classList.add('incomplete');
+                    }
+                });
+
+                progressConnectors.forEach((connector, index) => {
+                    if (index < stepIndex) {
+                        connector.classList.add('active');
+                        connector.classList.remove('incomplete');
+                    } else {
+                        connector.classList.remove('active');
+                        connector.classList.add('incomplete');
+                    }
+                });
+                
+                const isFirstStep = stepIndex === 0;
+                const isLastStep = stepIndex === steps.length - 1;
+
+                backBtn.style.display = isFirstStep ? 'none' : 'inline-flex';
+                nextBtn.style.display = isLastStep ? 'none' : 'inline-flex';
+                submitBtn.style.display = isLastStep ? 'inline-flex' : 'none';
+                
+                currentStep = stepIndex;
+            }
+
+            function validateStep(stepIndex) {
+                const currentStepElement = steps[stepIndex];
+                const inputs = [...currentStepElement.querySelectorAll('input[required], select[required], textarea[required]')];
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    input.classList.remove('error');
+                    let parent = input.parentElement;
+                    const existingError = parent.querySelector('.error-message');
+                    if (existingError) existingError.remove();
+
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('error');
+                        const errorMsg = document.createElement('p');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'This field is required.';
+                        parent.appendChild(errorMsg);
+                    }
+                });
+                
+                if (stepIndex === 1) { // Validation for step 2 (service details)
+                    const checkboxes = specificServicesContainer.querySelectorAll('input[type="checkbox"]');
+                    const isCategorySelected = serviceNeededSelect.value !== '';
+                    const isSpecificSelected = [...checkboxes].some(c => c.checked);
+                    const serviceErrorContainer = specificServicesContainer.parentNode; // The parent div of the container
+                    
+                    const existingError = serviceErrorContainer.querySelector('.error-message');
+                    if (existingError) existingError.remove();
+                    
+                    if (isCategorySelected && !isSpecificSelected) {
+                        isValid = false;
+                        const errorMsg = document.createElement('p');
+                        errorMsg.className = 'error-message';
+                        errorMsg.textContent = 'Please select at least one specific service.';
+                        // Append error inside the parent but after the container
+                        serviceErrorContainer.appendChild(errorMsg);
+                    }
+                }
+                return isValid;
+            }
+
+            nextBtn.addEventListener('click', () => {
+                if (validateStep(currentStep)) {
+                    showStep(currentStep + 1);
+                }
+            });
+
+            backBtn.addEventListener('click', () => {
+                showStep(currentStep - 1);
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (validateStep(currentStep)) {
+                    alert('Your service request has been submitted successfully!');
+                    form.reset();
+                    showStep(0);
+                    setTimeout(() => {
+                         updateSpecificServices();
+                         toggleAddressFields();
+                    }, 300);
+                }
+            });
+            
+            const eventDateInput = document.getElementById('event-date');
+            const today = new Date();
+            today.setDate(today.getDate() + 1);
+            eventDateInput.setAttribute('min', today.toISOString().split('T')[0]);
+
+            // Initial setup
+            showStep(0);
+            toggleAddressFields();
+        });
+    </script>
+</body>
+</html>
+
